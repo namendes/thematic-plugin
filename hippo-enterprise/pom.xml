@@ -6,6 +6,7 @@
     <groupId>com.onehippo.cms7</groupId>
     <artifactId>hippo-cms7-enterprise-release</artifactId>
     <version>12.3.0</version>
+    <relativePath></relativePath>
   </parent>
 
   <name>My Hippo Project</name>

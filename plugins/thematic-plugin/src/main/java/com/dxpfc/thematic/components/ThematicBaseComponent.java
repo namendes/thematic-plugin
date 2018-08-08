@@ -14,10 +14,8 @@ public class ThematicBaseComponent extends BaseHstComponent {
   public void doBeforeRender(HstRequest request, HstResponse response) throws HstComponentException {
 
     ResourceServiceBroker broker = HippoServiceRegistry.getService(ResourceServiceBroker.class);
-    Resource news = broker.resolve("newsresource", "");
+    Resource thematic = broker.resolve("thematicAPI", "");
 
-    request.setAttribute("news", news);
-    String a = news.toString();
-
+    request.setAttribute("thematic", thematic);
   }
 }

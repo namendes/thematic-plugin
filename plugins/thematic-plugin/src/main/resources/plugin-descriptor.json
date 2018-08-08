@@ -2,7 +2,7 @@
   "id": "thematicPlugin",
   "name": "Thematic",
   "icon": "/essentials/feature/images/thematic.png",
-  "introduction": "This feature adds search functionality to your site by providing a search box in the form of a library component in the Channel Manager. That search component can be dragged-and-dropped into your project.",
+  "introduction": "Merchant will be able to use Bloomreach Thematic.",
   "imageUrls": [
   ],
   "documentationLink": "https://www.onehippo.org/library/setup/hst-components/search-component.html",

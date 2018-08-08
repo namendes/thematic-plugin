@@ -1,0 +1,31 @@
+definitions:
+  config:
+    /hippo:configuration/hippo:modules/crispregistry/hippo:moduleconfig/crisp:resourceresolvercontainer/newsresource:
+      jcr:primaryType: crisp:resourceresolver
+      crisp:beandefinition: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<beans\
+        \ xmlns=\"http://www.springframework.org/schema/beans\"\r\n       xmlns:xsi=\"\
+        http://www.w3.org/2001/XMLSchema-instance\"\r\n       xsi:schemaLocation=\"\
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd\"\
+        >\r\n  \r\n  <bean parent=\"abstractCrispSimpleJacksonRestTemplateResourceResolver\"\
+        \r\n        class=\"org.onehippo.cms7.crisp.core.resource.jackson.SimpleJacksonRestTemplateResourceResolver\"\
+        >\r\n    <property name=\"cacheEnabled\" value=\"${cache.enabled}\" />\r\n\
+        \    <property name=\"baseUri\" value=\"${base.uri}\" />\r\n    <property\
+        \ name=\"restTemplate\">\r\n      <bean class=\"org.springframework.web.client.RestTemplate\"\
+        >\r\n        <property name=\"requestFactory\" ref=\"org.springframework.http.client.ClientHttpRequestFactory\"\
+        \ />\r\n      </bean>\r\n    </property>\r\n    <property name=\"resourceLinkResolver\"\
+        >\r\n      <bean class=\"org.onehippo.cms7.crisp.core.resource.FreemarkerTemplateResourceLinkResolver\"\
+        >\r\n      </bean>\r\n    </property>\r\n    <property name=\"resourceDataCache\"\
+        >\r\n      <bean class=\"org.onehippo.cms7.crisp.core.resource.SpringResourceDataCache\"\
+        >\r\n        <constructor-arg>\r\n          <bean class=\"org.springframework.cache.ehcache.EhCacheCache\"\
+        >\r\n            <constructor-arg>\r\n              <bean parent=\"abstractCrispResourceEhCache\"\
+        >\r\n                <property name=\"cacheName\" value=\"demoProductCatalogsCache\"\
+        \ />\r\n                <property name=\"maxEntriesLocalHeap\" value=\"1000\"\
+        \ />\r\n                <property name=\"maxEntriesLocalDisk\" value=\"0\"\
+        \ />\r\n                <property name=\"timeToLiveSeconds\" value=\"60\"\
+        \ />\r\n                <property name=\"timeToIdleSeconds\" value=\"60\"\
+        \ />\r\n              </bean>\r\n            </constructor-arg>\r\n      \
+        \    </bean>\r\n        </constructor-arg>\r\n      </bean>\r\n    </property>\r\
+        \n  </bean>\r\n  \r\n</beans>"
+      crisp:propnames: [cache.enabled, base.uri]
+      crisp:propvalues: ['true', 'http://brm-core-0.brsrvr.com/api/v1/core/?rows=100&amp;account_id=5017&amp;domain_key=neimanmarcus_com&amp;request_id=1&amp;url=xx&amp;fl=pid,title,brand,price,sale_price,promotions,thumb_image,sku_thumb_images,sku_swatch_images,sku_color_group,url,price_range,sale_price_range,description&amp;sc2_mode=True&amp;request_type=thematic&amp;q=pink
+          satin top&amp;debug=true&amp;']

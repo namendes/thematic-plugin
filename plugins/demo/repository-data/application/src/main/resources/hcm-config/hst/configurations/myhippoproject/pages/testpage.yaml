@@ -1,0 +1,6 @@
+definitions:
+  config:
+    /hst:hst/hst:configurations/myhippoproject/hst:pages/testpage:
+      jcr:primaryType: hst:component
+      hst:componentclassname: org.example.components.TestComponent
+      hst:template: test

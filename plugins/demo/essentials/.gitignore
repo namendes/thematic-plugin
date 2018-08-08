@@ -2,7 +2,7 @@
 /bin
 /logs
 /storage
+/overlays
 *.idea
 *.iml
 *.jar
-*.DS_Store

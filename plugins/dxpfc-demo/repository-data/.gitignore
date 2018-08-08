@@ -1,0 +1,8 @@
+/target
+/bin
+/logs
+/storage
+*.idea
+*.iml
+*.jar
+*.DS_STORE

@@ -1,0 +1,6 @@
+group: 
+  name: dxpfc-demo
+  after: hippo-cms
+project: dxpfc-demo
+module:
+  name: dxpfc-demo-repository-data-application

@@ -1,5 +1,0 @@
-definitions:
-  config:
-    /hst:hst/hst:configurations/hst:default/hst:pages/mypage:
-      jcr:primaryType: hst:component
-      hst:componentclassname: com.bloomreach.components.MyPluginComponent

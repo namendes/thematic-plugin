@@ -1,0 +1,6 @@
+definitions:
+  config:
+    /hst:hst/hst:configurations/dxpfcdemo/hst:pages/thematicBasePage:
+      jcr:primaryType: hst:component
+      hst:componentclassname: com.dxpfc.thematic.components.ThematicBaseComponent
+      hst:template: baseThematicTemplate

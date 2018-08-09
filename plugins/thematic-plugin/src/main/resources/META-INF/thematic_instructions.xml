@@ -8,4 +8,10 @@
     <freemarker action="copy" source="instructions/freemarker/include/imports.ftl" target="{{freemarkerRoot}}/include/imports.ftl"/>
     <freemarker action="copy" source="instructions/freemarker/include/pagination.ftl" target="{{freemarkerRoot}}/include/pagination.ftl"/>
   </instructionSet>
+  <instructionSet>
+    <mavenDependency targetPom="cms" groupId="com.dxpfc.thematic" artifactId="dxpfc-thematic-plugin" version="1.0.0-SNAPSHOT"/>
+    <mavenDependency targetPom="site" groupId="com.dxpfc.thematic" artifactId="dxpfc-thematic-plugin" version="1.0.0-SNAPSHOT"/>
+    <!--<execute class="org.onehippo.cms7.essentials.plugin.crisp.CrispInstruction"/>-->
+  </instructionSet>
+
 </instructions>

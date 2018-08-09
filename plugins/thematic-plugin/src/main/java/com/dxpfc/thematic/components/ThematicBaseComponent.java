@@ -19,7 +19,7 @@ public class ThematicBaseComponent extends BaseHstComponent {
     String splitUrl[] = baseUrl.split("/");
     int urlLength = splitUrl.length;
     String theme = splitUrl[urlLength-1];
-    Resource thematic = broker.resolve("thematicAPI", String.format(path, theme));
+    Resource thematic = broker.resolve("thematicResource", String.format(path, theme));
     request.setAttribute("thematic", thematic);
   }
 }

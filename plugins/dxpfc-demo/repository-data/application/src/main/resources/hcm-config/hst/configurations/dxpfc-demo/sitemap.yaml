@@ -1,9 +1,0 @@
-definitions:
-  config:
-    /hst:hst/hst:configurations/dxpfcdemo/hst:sitemap:
-      jcr:primaryType: hst:sitemap
-      /thematic:
-        jcr:primaryType: hst:sitemapitem
-        /_any_:
-          jcr:primaryType: hst:sitemapitem
-          hst:componentconfigurationid: hst:pages/thematicBasePage

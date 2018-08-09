@@ -2,9 +2,6 @@
   <sv:property sv:name="jcr:primaryType" sv:type="Name">
     <sv:value>hst:component</sv:value>
   </sv:property>
-  <sv:property sv:name="jcr:uuid" sv:type="String">
-    <sv:value>e38cb193-fe36-4e53-8f3a-b0d5b6a79c32</sv:value>
-  </sv:property>
   <sv:property sv:name="hst:componentclassname" sv:type="String">
     <sv:value>com.dxpfc.thematic.components.ThematicBaseComponent</sv:value>
   </sv:property>

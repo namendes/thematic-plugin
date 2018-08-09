@@ -2,9 +2,6 @@
   <sv:property sv:name="jcr:primaryType" sv:type="Name">
     <sv:value>hst:template</sv:value>
   </sv:property>
-  <sv:property sv:name="jcr:uuid" sv:type="String">
-    <sv:value>839c0370-997e-4c8f-bc28-78c2ff9cd045</sv:value>
-  </sv:property>
   <sv:property sv:name="hst:renderpath" sv:type="String">
     <sv:value>webfile:/freemarker/thematic-templates/base-thematic-template.ftl</sv:value>
   </sv:property>

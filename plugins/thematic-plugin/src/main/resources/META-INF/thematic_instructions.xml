@@ -8,10 +8,17 @@
     <freemarker action="copy" source="instructions/freemarker/include/imports.ftl" target="{{freemarkerRoot}}/include/imports.ftl"/>
     <freemarker action="copy" source="instructions/freemarker/include/pagination.ftl" target="{{freemarkerRoot}}/include/pagination.ftl"/>
   </instructionSet>
-  <instructionSet>
+  <instructionSet group="dependencies">
     <mavenDependency targetPom="cms" groupId="com.dxpfc.thematic" artifactId="dxpfc-thematic-plugin" version="1.0.0-SNAPSHOT"/>
     <mavenDependency targetPom="site" groupId="com.dxpfc.thematic" artifactId="dxpfc-thematic-plugin" version="1.0.0-SNAPSHOT"/>
     <!--<execute class="org.onehippo.cms7.essentials.plugin.crisp.CrispInstruction"/>-->
+  </instructionSet>
+  <instructionSet group="configurations">
+    <xml action="copy" overwrite="false" source="configuration/thematicResource.xml" target="/hippo:configuration/hippo:modules/crispregistry/hippo:moduleconfig/crisp:resourceresolvercontainer/thematicResource"/>
+    <xml action="copy" overwrite="false" source="hst/baseThematicTemplate.xml" target="/hst:hst/hst:configurations/dxpfcdemo/hst:templates/baseThematicTemplate"/>
+    <xml action="copy" overwrite="false" source="hst/thematicBasePage.xml" target="/hst:hst/hst:configurations/dxpfcdemo/hst:pages/thematicBasePage"/>
+    <xml action="copy" overwrite="false" source="hst/thematic.xml" target="/hst:hst/hst:configurations/dxpfcdemo/hst:sitemap/thematic"/>
+    <xml action="copy" overwrite="false" source="hst/_any_.xml" target="/hst:hst/hst:configurations/dxpfcdemo/hst:sitemap/thematic/_any_"/>
   </instructionSet>
 
 </instructions>

@@ -25,7 +25,9 @@
     ]
   },
   "pluginDependencies": [
-	  "pluginId": "crisp",
-	  "minInstallStateForInstalling": "installed"
+    {
+      "pluginId": "crisp",
+      "minInstallStateForInstalling": "installed"
+    }
   ]
 }

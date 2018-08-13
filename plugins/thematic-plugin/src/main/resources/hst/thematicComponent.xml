@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><sv:node xmlns:sv="http://www.jcp.org/jcr/sv/1.0" sv:name="hst:components">
+    <sv:property sv:name="jcr:primaryType" sv:type="Name">
+        <sv:value>hst:components</sv:value>
+    </sv:property>
+    <sv:node sv:name="thematicComponent">
+        <sv:property sv:name="jcr:primaryType" sv:type="Name">
+            <sv:value>hst:component</sv:value>
+        </sv:property>
+        <sv:property sv:name="hst:componentclassname" sv:type="String">
+            <sv:value>com.dxpfc.thematic.components.ThematicBaseComponent</sv:value>
+        </sv:property>
+        <sv:property sv:name="hst:parameternames" sv:type="String" sv:multiple="true">
+            <sv:value>fields</sv:value>
+            <sv:value>max_results_per_page</sv:value>
+            <sv:value>account_id</sv:value>
+            <sv:value>domain_key</sv:value>
+            <sv:value>sc2_mode</sv:value>
+            <sv:value>request_type</sv:value>
+            <sv:value>debug_mode</sv:value>
+        </sv:property>
+        <sv:property sv:name="hst:parametervalues" sv:type="String" sv:multiple="true">
+            <sv:value>pid,title,brand,price,sale_price,promotions,thumb_image,sku_thumb_images,sku_swatch_images,sku_color_group,url,price_range,sale_price_range,description</sv:value>
+            <sv:value>50</sv:value>
+            <sv:value>5017</sv:value>
+            <sv:value>neimanmarcus_com</sv:value>
+            <sv:value>True</sv:value>
+            <sv:value>thematic</sv:value>
+            <sv:value>true</sv:value>
+        </sv:property>
+    </sv:node>
+</sv:node>

@@ -18,6 +18,7 @@
     <xml action="copy" overwrite="false" source="hst/baseThematicTemplate.xml" target="/hst:hst/hst:configurations/hst:default/hst:templates"/>
     <xml action="copy" overwrite="false" source="hst/thematicComponent.xml" target="/hst:hst/hst:configurations/hst:default/hst:components"/>
     <xml action="copy" overwrite="false" source="hst/thematicBasePage.xml" target="/hst:hst/hst:configurations/hst:default/hst:pages"/>
+    <xml action="copy" overwrite="false" source="hst/thematic.xml" target="/hst:hst/hst:configurations/hst:default/hst:sitemap"/>
     <xml action="copy" overwrite="false" source="hst/host_configuration.xml" target="/hst:hst/hst:hosts"/>
 
   </instructionSet>

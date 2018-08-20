@@ -21,7 +21,7 @@
             </div>
 
             <#assign show_salecost = false/>
-            <#if (product.hasValue("sale_price") && product.hasValue("price") && !(product.getValue("sale_price") == product.getValue("price"))) >
+            <#if (product.getValue("sale_price")?? && product.getValue("price")?? !(product.getValue("sale_price") == product.getValue("price"))) >
                 <#assign show_salecost = true/>
             </#if>
             <#if show_salecost>

@@ -37,6 +37,7 @@ public class ThematicBaseComponent extends BaseHstComponent {
     }
 
     Resource thematic = broker.resolve("thematicResource", String.format(path, row, accountId, domainKey, requestId, url, fl, sc2Mode, requestType, theme, debugMode));
+
     request.setAttribute("thematic", thematic);
 
   }

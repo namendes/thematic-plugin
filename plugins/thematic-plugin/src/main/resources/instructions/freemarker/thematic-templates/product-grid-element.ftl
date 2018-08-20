@@ -82,4 +82,23 @@
     </div>
 
 </li>
-</#macro>-->
+</#macro>
+
+<script type="text/javascript">
+    function hideBrPop(theClass) {
+        var allPageClasses = document.getElementsByClassName(theClass);
+        for (var i = allPageClasses.length; i--;) {
+            allPageClasses[i].style.display='none';
+        }
+    }
+    document.onkeydown = function(e) {
+        var KEYCODE_ESC = 27;
+        if (!e) {
+            e = window.event;
+        }
+        if (e.keyCode === KEYCODE_ESC) {
+            hideBrPop('_popup');
+            document.body.removeAttribute('style');
+        }
+    };
+</script>

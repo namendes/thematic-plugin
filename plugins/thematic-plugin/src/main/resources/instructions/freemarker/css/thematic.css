@@ -1,0 +1,113 @@
+body {
+    background: #eee;
+}
+
+.list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.list--item {
+    width: 25%;
+    float: left;
+    padding: 10px;
+    display: flex;
+}
+.list--item figure {
+    background: #fff;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+.list--item img {
+    display: block;
+    width: 100%;
+}
+.list--item figcaption {
+    padding: 6px 12px 12px;
+    font-size: 12px;
+    color: #444;
+}
+.list--item header, .list--item figcaption {
+    padding-left: 25%;
+}
+.list--item header {
+    margin-top: 12px;
+}
+.list--item h2 {
+    font-size: 14px;
+    padding: 0 0 0;
+    margin: 0;
+}
+
+.floater {
+    width: 20%;
+    height: 50px;
+    background: orange;
+    position: absolute;
+    left: 0;
+}
+
+@media screen and (min-width: 1200px) {
+    .container {
+        width: 90%;
+    }
+
+    .list--item {
+        width: 20%;
+    }
+}
+@media screen and (max-width: 768px) {
+    .list--item {
+        width: 33%;
+    }
+}
+@media screen and (max-width: 620px) {
+    .list--item {
+        width: 50%;
+    }
+}
+@media screen and (max-width: 480px) {
+    .list--item {
+        width: 100%;
+    }
+}
+
+
+
+
+
+.br-details-trigger {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.br-details-trigger .br-details-content {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 150%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.br-details-trigger .br-details-content::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent;
+}
+
+.br-details-trigger:hover .br-details-content {
+    visibility: visible;
+}

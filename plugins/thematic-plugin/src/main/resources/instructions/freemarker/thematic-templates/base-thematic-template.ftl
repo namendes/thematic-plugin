@@ -1,3 +1,4 @@
+<!doctype html>
 <#include "../include/imports.ftl">
 <#import "product-grid-element.ftl" as grid>
 
@@ -25,8 +26,12 @@
 <#global  themeblocklist_result_index = 0/>
 <#global  themeblock_result_index = 0/>
 <#global  resultlist_result_index = 0/>
+<@hst.webfile var="link" path="freemarker/css/thematic.css" />
+<link rel="stylesheet" href="${link}">
 
-
+<body>
+<div class="container">
+    <div class="list">
 <#list thematic.getValue('response').getValue('docs').children.collection as newsDoc>
     <#global thematicpage_result_index = thematicpage_result_index + 1 />
     <#global themeblocklist_result_index = themeblocklist_result_index + 1 />
@@ -35,3 +40,6 @@
     <#global lpm_product = "prefix__hashmd5" />
     <@grid.grid_element product=newsDoc/>
 </#list>
+    </div>
+</div>
+</body>

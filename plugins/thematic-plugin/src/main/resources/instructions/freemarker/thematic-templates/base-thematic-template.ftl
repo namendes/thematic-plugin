@@ -26,7 +26,7 @@
 <#global  themeblocklist_result_index = 0/>
 <#global  themeblock_result_index = 0/>
 <#global  resultlist_result_index = 0/>
-<@hst.webfile var="link" path="freemarker/css/thematic.css" />
+<@hst.webfile var="link" path="css/thematic.css" />
 <link rel="stylesheet" href="${link}">
 
 <body>

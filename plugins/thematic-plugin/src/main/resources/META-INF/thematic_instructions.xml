@@ -7,6 +7,7 @@
     <freemarker action="copy" source="instructions/freemarker/thematic-templates/base-thematic-template.ftl" target="{{freemarkerRoot}}/thematic-templates/base-thematic-template.ftl"/>
     <freemarker action="copy" source="instructions/freemarker/thematic-templates/product-grid-element.ftl" target="{{freemarkerRoot}}/thematic-templates/product-grid-element.ftl"/>
     <freemarker action="copy" source="instructions/freemarker/include/imports.ftl" target="{{freemarkerRoot}}/include/imports.ftl"/>
+    <freemarker action="copy" source="instructions/freemarker/thematic-templates/thematic-control-panel.ftl" target="{{freemarkerRoot}}/thematic-templates/thematic-control-panel.ftl"/>
   </instructionSet>
   <instructionSet>
     <file action="copy" source="instructions/freemarker/css/thematic.css" target="{{webfilesCssRoot}}/thematic.css"/>
@@ -19,8 +20,11 @@
   <instructionSet>
     <xml action="copy" overwrite="false" source="configuration/thematicResource.xml" target="/hippo:configuration/hippo:modules/crispregistry/hippo:moduleconfig/crisp:resourceresolvercontainer"/>
     <xml action="copy" overwrite="false" source="hst/baseThematicTemplate.xml" target="/hst:hst/hst:configurations/hst:default/hst:templates"/>
+    <xml action="copy" overwrite="false" source="hst/thematicControlPanelTemplate.xml" target="/hst:hst/hst:configurations/hst:default/hst:templates"/>
     <xml action="copy" overwrite="false" source="hst/thematicComponent.xml" target="/hst:hst/hst:configurations/hst:default/hst:components"/>
+    <xml action="copy" overwrite="false" source="hst/thematicControlPanelComponent.xml" target="/hst:hst/hst:configurations/hst:default/hst:components"/>
     <xml action="copy" overwrite="false" source="hst/thematicBasePage.xml" target="/hst:hst/hst:configurations/hst:default/hst:pages"/>
+    <xml action="copy" overwrite="false" source="hst/thematicControlPanel.xml" target="/hst:hst/hst:configurations/hst:default/hst:pages"/>
     <xml action="copy" overwrite="false" source="hst/thematic.xml" target="/hst:hst/hst:configurations/hst:default/hst:sitemap"/>
     <xml action="copy" overwrite="false" source="hst/host_configuration.xml" target="/hst:hst/hst:hosts"/>
 

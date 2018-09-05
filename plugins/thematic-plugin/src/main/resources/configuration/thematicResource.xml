@@ -48,6 +48,6 @@
   </sv:property>
   <sv:property sv:name="crisp:propvalues" sv:type="String" sv:multiple="true">
     <sv:value>true</sv:value>
-    <sv:value>http://lb-e-brm-core-0-testing-11358307.us-east-1.elb.amazonaws.com/api/v1/core/</sv:value>
+    <sv:value>http://core.dxpapi.com/api/v1/core/</sv:value>
   </sv:property>
 </sv:node>

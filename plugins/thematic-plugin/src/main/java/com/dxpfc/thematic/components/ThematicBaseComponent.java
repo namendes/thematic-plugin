@@ -11,13 +11,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
+import java.util.UUID;
 
 public class ThematicBaseComponent extends BaseHstComponent {
 
   private static Logger log = LoggerFactory.getLogger(ThematicBaseComponent.class);
   @Override
   public void doBeforeRender(HstRequest request, HstResponse response) throws HstComponentException {
+
     // log.info("Thematic Request - "+ "http://"+request.getRequestContext().getBaseURL().getHostName()+request.getRequestContext().getBaseURL().getContextPath()+request.getRequestContext().getBaseURL().getRequestPath());
+    UUID uuid = UUID.randomUUID();
+    uuid.toString();
+
     ResourceServiceBroker broker = HippoServiceRegistry.getService(ResourceServiceBroker.class);
     String path = "?rows=%s&account_id=%s&domain_key=%s&request_id=%s&url=%s&fl=%s&sc2_mode=%s&request_type=%s&q=%s&debug=%s&";
     String baseUrl = request.getRequestContext().getBaseURL().getRequestPath();
@@ -30,14 +35,15 @@ public class ThematicBaseComponent extends BaseHstComponent {
     String accountId = properties.get("account_id");
     String domainKey = properties.get("domain_key");
     String sc2Mode = properties.get("sc2_mode");
-    String requestType = properties.get("request_type");
+    String feRequestType = properties.get("request_type");
     String debugMode = properties.get("debug_mode");
     String requestId = "1";
     String url = "hippo:" + baseUrl;
 
-    if (requestType.equals("search")) {
-      requestType = "search&search_type=keyword";
+    if (feRequestType.equals("search")) {
+      feRequestType = "search&search_type=keyword";
     }
+
     request.setAttribute("rsp",new Boolean(false));
    try {
      Resource thematic = broker.resolve("thematicResource", String.format(path, row, accountId, domainKey, requestId, url, fl, sc2Mode, requestType, theme, debugMode));
@@ -52,4 +58,8 @@ public class ThematicBaseComponent extends BaseHstComponent {
    }
 
   }
+
+
+
+
 }

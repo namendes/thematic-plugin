@@ -1,5 +1,5 @@
 <!doctype html>
-
+<#include "../include/imports.ftl">
 <head>
     Thematic Control panel
 </head>
@@ -11,8 +11,7 @@
 
 <form action="<@hst.actionURL/>" method="post">
     <p> theme to add to sitemap <input type="text" name="theme"></p>
-    <p> add <input type="submit" value="Add theme"></p>
-
+    <p> add <input type="submit" value="Add theme" onclick="redirect()"></p>
 </form>
 
 
@@ -39,34 +38,47 @@
 
 
 
-<script type="text/javascript">
-    var current_frame = 0;
-    var total_frames = 60;
-    var paths = document.getElementsByTagName('path');
-    var length = [];
+    <script type="text/javascript">
+        var current_frame = 0;
+        var total_frames = 60;
+        var paths = document.getElementsByTagName('path');
+        var length = [];
 
-    for(var i=0; i< paths.length ;i++){
-        var l = paths[i].getTotalLength() + 200;
-        length[i] = l;
-        paths[i].style.strokeDasharray = l + ' ' + l;
-        paths[i].style.strokeDashoffset = l;
-    }
-    var handle = 0;
-
-    var draw = function() {
-        var progress = current_frame/total_frames;
-        if (progress > 1) {
-            window.cancelAnimationFrame(handle);
-        } else {
-            current_frame++;
-            for(var j=0; j<paths.length;j++){
-                paths[j].style.strokeDashoffset = Math.floor(length[j] * (1 - progress));
-            }
-            handle = window.requestAnimationFrame(draw);
+        for(var i=0; i< paths.length ;i++){
+            var l = paths[i].getTotalLength() + 200;
+            length[i] = l;
+            paths[i].style.strokeDasharray = l + ' ' + l;
+            paths[i].style.strokeDashoffset = l;
         }
-        if (current_frame == 61){ current_frame = 0};
-    };
-    draw();
-</script>
+        var handle = 0;
+
+        var draw = function() {
+            var progress = current_frame/total_frames;
+            if (progress > 1) {
+                window.cancelAnimationFrame(handle);
+            } else {
+                current_frame++;
+                for(var j=0; j<paths.length;j++){
+                    paths[j].style.strokeDashoffset = Math.floor(length[j] * (1 - progress));
+                }
+                handle = window.requestAnimationFrame(draw);
+            }
+            if (current_frame == 61){ current_frame = 0};
+        };
+        draw();
+
+        var redirect = function () {
+            var injector = parent['angular'].element(parent.document.body).injector();
+            if (injector) {
+                injector.get('$rootScope').$apply(function() {
+                    var channelService = injector.get('ChannelService');
+                    channelService.recordOwnChange();
+                });
+            }
+        }
+
+
+
+    </script>
 
 </body>

@@ -17,6 +17,8 @@ import org.hippoecm.hst.site.HstServices;
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 public class ThematicControlPanelComponent extends BaseHstComponent {
@@ -29,11 +31,11 @@ public class ThematicControlPanelComponent extends BaseHstComponent {
 
   @Override
   public void doAction(HstRequest request, HstResponse response) throws HstComponentException {
-
+    String theme = "";
     Session session = null;
     try {
       FormMap map = new FormMap(request, new String[]{"theme"});
-      String theme = map.getField("theme").getValue();
+      theme = map.getField("theme").getValue();
       HstRequestContext requestContext = RequestContextProvider.get();
       String baseSiteMapUuid = requestContext.getResolvedMount().getMount().getChannel().getSiteMapId();
       Node baseSitemapNode = requestContext.getSession().getNodeByIdentifier(baseSiteMapUuid);
@@ -62,6 +64,9 @@ public class ThematicControlPanelComponent extends BaseHstComponent {
       session = requestContext.getSession();
       session.save();
       unlockAndRelockLandingPages(createdSitemapNode);
+
+      String redirect = request.getRequestContext().getHstLinkCreator().create("/thematic/"+theme, requestContext.getResolvedMount().getMount()).toUrlForm(requestContext, true);
+      response.sendRedirect(redirect);
       session = RequestContextProvider.get().getSession();
       Node node = session.getNodeByIdentifier("895fb1b6-410d-4972-9894-6b6a06d2b361");
       if(node != null) {
@@ -71,7 +76,11 @@ public class ThematicControlPanelComponent extends BaseHstComponent {
 
     } catch (RepositoryException e) {
       e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
     }
+    final HttpSession finalSession = request.getSession();
+    finalSession.setAttribute("success", true);
 
   }
 

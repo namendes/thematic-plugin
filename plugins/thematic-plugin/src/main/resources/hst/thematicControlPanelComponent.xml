@@ -5,4 +5,16 @@
     <sv:property sv:name="hst:componentclassname" sv:type="String">
         <sv:value>com.dxpfc.thematic.components.ThematicControlPanelComponent</sv:value>
     </sv:property>
+    <sv:property sv:name="hst:parameternames" sv:type="String" sv:multiple="true">
+        <sv:value>account_id</sv:value>
+        <sv:value>rows</sv:value>
+        <sv:value>fl</sv:value>
+        <sv:value>wt</sv:value>
+    </sv:property>
+    <sv:property sv:name="hst:parametervalues" sv:type="String" sv:multiple="true">
+        <sv:value>neimanmarcus</sv:value>
+        <sv:value>100</sv:value>
+        <sv:value>theme,visits,revenue,user_set_is_live_i,user_set_is_indexed_i</sv:value>
+        <sv:value>json</sv:value>
+    </sv:property>
 </sv:node>

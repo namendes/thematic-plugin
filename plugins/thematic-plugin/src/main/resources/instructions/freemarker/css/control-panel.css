@@ -1,5 +1,5 @@
 [v-cloak] > * { display:none; }
-  html {
+html {
   box-sizing: border-box;
   font-size: 18px;
 }
@@ -52,7 +52,7 @@ img {
 
 .results__item {
   display: grid;
-  grid-template-columns: 25px 1fr;
+  grid-template-columns: 50% 1fr;
   border-radius: .25rem;
   background-color: #eee;
   box-shadow: 0 0 7px 0 #ccc, 0 0 55px 0 #eee;
@@ -62,8 +62,8 @@ img {
   margin: .5rem;
 }
 .results__item p {
-  padding-top: 1rem;
-  padding-left: 2rem;
+  padding: 2rem;
+  vertical-align: middle;
 }
 
 .search button {
@@ -73,8 +73,8 @@ img {
 }
 
 .search input, button{
-    margin:0;
-    vertical-align: middle;
+  margin:0;
+  vertical-align: middle;
 
 }
 .search img{
@@ -82,9 +82,24 @@ img {
   width: 50%;
 }
 .row {
-    display: flex;
+  display: flex;
 }
 
 .column {
-    flex: 50%;
+  flex: 50%;
+}
+
+
+.customise {
+  background-color : #31B0D5;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border-color: #46b8da;
+}
+
+#customiseDiv {
+  position: fixed;
+  bottom: 4px;
+  right: 5px;
 }

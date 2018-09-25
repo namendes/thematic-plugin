@@ -26,6 +26,7 @@
             </ul>
         </form>
     </div>
+<<<<<<< HEAD
     <div class="column">
         <iframe id="previewPanel" src="" style="width: 100%; height: 100%;"></iframe>
     </div>

@@ -53,6 +53,11 @@
             <type>pom</type>
         </dependency>
         <dependency>
+            <groupId>org.onehippo.cms7.hst.client-modules</groupId>
+            <artifactId>hst-page-composer</artifactId>
+            <version>5.4.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.onehippo.cms7.hst.dependencies</groupId>
             <artifactId>hst-spring-dependencies</artifactId>
             <type>pom</type>

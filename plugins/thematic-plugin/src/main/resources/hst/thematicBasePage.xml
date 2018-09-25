@@ -8,4 +8,36 @@
   <sv:property sv:name="hst:template" sv:type="String">
     <sv:value>baseThematicTemplate</sv:value>
   </sv:property>
+    <sv:node sv:name="container1">
+        <sv:property sv:name="jcr:primaryType" sv:type="Name">
+            <sv:value>hst:containercomponent</sv:value>
+        </sv:property>
+        <sv:property sv:name="hst:xtype" sv:type="String">
+            <sv:value>HST.VBox</sv:value>
+        </sv:property>
+    </sv:node>
+    <sv:node sv:name="container2">
+        <sv:property sv:name="jcr:primaryType" sv:type="Name">
+            <sv:value>hst:containercomponent</sv:value>
+        </sv:property>
+        <sv:property sv:name="hst:xtype" sv:type="String">
+            <sv:value>HST.VBox</sv:value>
+        </sv:property>
+    </sv:node>
+    <sv:node sv:name="container3">
+        <sv:property sv:name="jcr:primaryType" sv:type="Name">
+            <sv:value>hst:containercomponent</sv:value>
+        </sv:property>
+        <sv:property sv:name="hst:xtype" sv:type="String">
+            <sv:value>HST.VBox</sv:value>
+        </sv:property>
+    </sv:node>
+    <sv:node sv:name="container4">
+        <sv:property sv:name="jcr:primaryType" sv:type="Name">
+            <sv:value>hst:containercomponent</sv:value>
+        </sv:property>
+        <sv:property sv:name="hst:xtype" sv:type="String">
+            <sv:value>HST.VBox</sv:value>
+        </sv:property>
+    </sv:node>
 </sv:node>

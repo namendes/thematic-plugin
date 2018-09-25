@@ -5,4 +5,10 @@
     <sv:property sv:name="hst:componentclassname" sv:type="String">
         <sv:value>com.dxpfc.thematic.components.ThematicControlPanelComponent</sv:value>
     </sv:property>
+    <sv:property sv:name="hst:parameternames" sv:type="String" sv:multiple="true">
+        <sv:value>thematicPageSitemapPath</sv:value>
+    </sv:property>
+    <sv:property sv:name="hst:parametervalues" sv:type="String" sv:multiple="true">
+        <sv:value>thematic/</sv:value>
+    </sv:property>
 </sv:node>

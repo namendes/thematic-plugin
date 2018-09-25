@@ -7,6 +7,7 @@
 
 </head>
 <body>
+
 <div class="row" id="main">
     <div class="column">
         <form method="get">
@@ -31,7 +32,10 @@
     </div>
 </div>
 <div id="customiseDiv">
-    <button class="customise">Customise</button>
+    <form action="<@hst.actionURL/>" method="post">
+        <p> <input id="formInput" type="text" name="theme"></p>
+        <p> <input type="submit" value="Customize" onclick="redirect()"></p>
+    </form>
 </div>
 </body>
 <link rel="stylesheet" href="${controlPanelCss}">

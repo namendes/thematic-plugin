@@ -12,7 +12,7 @@
   <instructionSet>
     <file action="copy" source="instructions/freemarker/css/thematic.css" target="{{webfilesCssRoot}}/thematic.css"/>
     <file action="copy" source="instructions/freemarker/css/control-panel.css" target="{{webfilesCssRoot}}/control-panel.css"/>
-    <file action="copy" source="instructions/freemarker/css/control-panel.js" target="{{webfilesJsRoot}}/control-panel.js"/>
+    <file action="copy" source="instructions/freemarker/js/control-panel.js" target="{{webfilesJsRoot}}/control-panel.js"/>
   </instructionSet>
   <instructionSet>
     <mavenDependency targetPom="cms" groupId="com.dxpfc.thematic" artifactId="dxpfc-thematic-plugin" version="1.0.0-SNAPSHOT"/>
@@ -28,6 +28,8 @@
     <xml action="copy" overwrite="false" source="hst/thematicControlPanelComponent.xml" target="/hst:hst/hst:configurations/hst:default/hst:components"/>
     <xml action="copy" overwrite="false" source="hst/thematicBasePage.xml" target="/hst:hst/hst:configurations/hst:default/hst:pages"/>
     <xml action="copy" overwrite="false" source="hst/thematicBasePage.xml" target="/hst:hst/hst:configurations/{{namespace}}/hst:prototypepages"/>
+    <xml action="copy" overwrite="false" source="hst/defaultPrototypePage.xml" target="/hst:hst/hst:configurations/hst:default"/>
+    <xml action="copy" overwrite="false" source="hst/thematicBasePage.xml" target="/hst:hst/hst:configurations/hst:default/hst:prototypepages"/>
     <xml action="copy" overwrite="false" source="hst/thematicControlPanel.xml" target="/hst:hst/hst:configurations/hst:default/hst:pages"/>
     <xml action="copy" overwrite="false" source="hst/thematic.xml" target="/hst:hst/hst:configurations/hst:default/hst:sitemap"/>
     <xml action="copy" overwrite="false" source="hst/thematic.xml" target="/hst:hst/hst:configurations/{{namespace}}/hst:workspace/hst:sitemap"/>

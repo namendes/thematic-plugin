@@ -91,7 +91,7 @@ public class ThematicControlPanelComponent extends BaseHstComponent {
       String baseSiteMapUuid = requestContext.getResolvedMount().getMount().getChannel().getSiteMapId();
       Node baseSitemapNode = requestContext.getSession().getNodeByIdentifier(baseSiteMapUuid);
       Mount editingMount = getEditingMount(requestContext);
-      Node prototypeNODE = requestContext.getSession().getNode("/hst:hst/hst:configurations/dxpfcdemo/hst:prototypepages/thematicBasePagePrototype");
+      Node prototypeNODE = requestContext.getSession().getNode("/hst:hst/hst:configurations/hst:default/hst:prototypepages/thematicBasePage");
 
 
 

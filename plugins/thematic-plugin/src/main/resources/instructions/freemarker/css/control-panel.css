@@ -103,3 +103,7 @@ img {
   bottom: 4px;
   right: 5px;
 }
+
+#formInput {
+  display: none;
+}

@@ -33,10 +33,7 @@ public class ThematicControlPanelComponent extends BaseHstComponent {
     String[] themes = params.getOrDefault("theme",new String[]{"*"});
     String theme = (themes[0].equalsIgnoreCase("*")) ? "*" : "\"" + themes[0] + "\"";
     StringBuffer currentURL = request.getRequestContext().getServletRequest().getRequestURL();
-    String searchEndpoint = properties.get("account_id") +
-            "_lpm_pagedata_v2/select?q=theme:" + theme +
-            "&rows=" + properties.get("rows") +
-            "&fl=" + properties.get("fl") + "&wt=" + properties.get("wt");
+    String searchEndpoint = buildSearchEndpoint(properties, theme);
     try{
       Resource thematicSearch = broker.resolve("thematicSearch", searchEndpoint);
       Object searchResults = thematicSearch.getValue("response/docs");
@@ -56,4 +53,12 @@ public class ThematicControlPanelComponent extends BaseHstComponent {
   public void doAction(HstRequest request, HstResponse response) throws HstComponentException {
 
   }
+
+  private String buildSearchEndpoint(Map<String, String> properties, String theme){
+    return properties.get("account_id") +
+            "_lpm_pagedata_v2/select?q=theme:" + theme +
+            "&rows=" + properties.get("rows") +
+            "&fl=" + properties.get("fl") + "&wt=" + properties.get("wt");
+  }
+
 }

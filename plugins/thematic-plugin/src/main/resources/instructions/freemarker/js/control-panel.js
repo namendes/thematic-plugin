@@ -6,7 +6,6 @@ function loadPreview(url) {
     selectedtheme=url;
 }
 
-
 function redirect() {
     document.getElementById("formInput").setAttribute("value",selectedtheme);
     var injector = parent['angular'].element(parent.document.body).injector();
@@ -18,6 +17,6 @@ function redirect() {
     }
 }
 
-function getTheme() {
-    return selectedtheme;
+window.onload = function() {
+    document.getElementById("default_Sel").focus();
 }

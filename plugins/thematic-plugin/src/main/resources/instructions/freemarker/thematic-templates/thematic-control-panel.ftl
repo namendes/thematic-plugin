@@ -8,8 +8,9 @@
 </head>
 <body>
 
+<#assign count=1>
 <div class="row" id="main">
-    <div class="column">
+    <div class="column1">
         <form method="get">
             <div class="search">
                 <input name="theme" type="text" id="searchField" class="search__input" placeholder="Search Thematic" />
@@ -19,16 +20,26 @@
             </div>
             <ul class="results">
                 <#list searchResults.children.collection as result>
-                    <li class="results__item" onclick="loadPreview('${result.getValue("theme")}')">
+                    <#if count == 1>
+                        <#assign firsturl=result.getValue("theme")>
+                    <li class="results__item" id="default_Sel" tabindex="${count}" onclick="loadPreview('${result.getValue("theme")}')" >
                         <p>${result.getValue("theme")}</p>
                         <p>Revenue - ${result.getValue("revenue")}<br>Visits - ${result.getValue("visits")}</p>
                     </li>
+                        <#assign count++>
+                    <#else>
+                    <li class="results__item" tabindex="${count}" onclick="loadPreview('${result.getValue("theme")}')">
+                        <p>${result.getValue("theme")}</p>
+                        <p>Revenue - ${result.getValue("revenue")}<br>Visits - ${result.getValue("visits")}</p>
+                    </li>
+                        <#assign count++>
+                    </#if>
                 </#list>
             </ul>
         </form>
     </div>
-    <div class="column">
-        <iframe id="previewPanel" src="" style="width: 100%; height: 100%;"></iframe>
+    <div class="column2">
+        <iframe id="previewPanel" src="${firsturl}" style="width: 100%; height: 100%;"></iframe>
     </div>
 </div>
 <div id="customiseDiv">

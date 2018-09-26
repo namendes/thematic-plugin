@@ -1,7 +1,8 @@
 var selectedtheme="";
 
 function loadPreview(url) {
-    document.getElementById("previewPanel").setAttribute("src",url);
+    var resUrl = url.replace(/ /g, "-");
+    document.getElementById("previewPanel").setAttribute("src",resUrl);
     selectedtheme=url;
 }
 

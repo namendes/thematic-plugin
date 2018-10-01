@@ -19,4 +19,4 @@ function redirect() {
 
 window.onload = function() {
     document.getElementById("default_Sel").focus();
-}
+};

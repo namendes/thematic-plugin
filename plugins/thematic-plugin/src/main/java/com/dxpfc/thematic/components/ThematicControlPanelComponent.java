@@ -107,17 +107,13 @@ public class ThematicControlPanelComponent extends BaseHstComponent {
     Session session;
     try {
       FormMap map = new FormMap(request, new String[]{"theme"});
-      theme = map.getField("theme").getValue();
-
-
-      theme = theme.replaceAll(" ", "-");
-
+      theme = map.getField("theme").getValue().replaceAll(" ", "-");
 
       HstRequestContext requestContext = RequestContextProvider.get();
       String baseSiteMapUuid = requestContext.getResolvedMount().getMount().getChannel().getSiteMapId();
       Node baseSitemapNode = requestContext.getSession().getNodeByIdentifier(baseSiteMapUuid);
       Mount editingMount = getEditingMount(requestContext);
-      Node prototypeNODE = requestContext.getSession().getNode("/hst:hst/hst:configurations/hst:default/hst:prototypepages/thematicBasePage");
+      Node prototypeNode = requestContext.getSession().getNode("/hst:hst/hst:configurations/hst:default/hst:prototypepages/thematicBasePage");
 
 
       Map<String, String> properties = getComponentParameters();
@@ -141,7 +137,7 @@ public class ThematicControlPanelComponent extends BaseHstComponent {
       } catch (PathNotFoundException e) {
         SiteMapItemRepresentation siteMapItem = new SiteMapItemRepresentation();
         siteMapItem.setName(theme);
-        siteMapItem.setComponentConfigurationId(prototypeNODE.getIdentifier());
+        siteMapItem.setComponentConfigurationId(prototypeNode.getIdentifier());
         String previewThemeSitemapPath = editingMount.getHstSite().getConfigurationPath() + WORKSPACE_SITEMAP_CONFIGURATION_PATH + cleanPath;
         DocumentRepresentation document = new DocumentRepresentation(previewThemeSitemapPath + theme, theme, true, true);
         siteMapItem.setPrimaryDocumentRepresentation(document);

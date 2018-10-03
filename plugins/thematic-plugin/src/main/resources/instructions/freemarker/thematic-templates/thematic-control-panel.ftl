@@ -4,7 +4,7 @@
     <@hst.webfile var="controlPanelJs" path="js/control-panel.js" />
 <head>
     <title>Thematic Control Panel Page</title>
-
+    <link rel="stylesheet" href="${controlPanelCss}">
 </head>
 <body>
 
@@ -14,6 +14,7 @@
             <div class="search">
                 <input name="theme" type="text" id="searchField" class="search__input" placeholder="Search Thematic" />
                 <button type="submit">
+                    <#--TODO change to local url-->
                     <img src="https://cdn1.iconfinder.com/data/icons/TWG_Retina_Icons/24/magnifier.png"/>
                 </button>
             </div>
@@ -37,9 +38,12 @@
         <p> <input type="submit" value="Customize" onclick="redirect()"></p>
     </form>
 </div>
-</body>
-<link rel="stylesheet" href="${controlPanelCss}">
+
+
 <script src="${controlPanelJs}"></script>
+</body>
+
+
 
 </html>
 <#-- <div id="spinner" style="position:absolute; top: 0; left: 0; width:200px; height:100px;">

@@ -3,7 +3,9 @@
     <figure>
         <img src="${product.getValue("thumb_image")}" alt="">
         <header>
-            <h2>${product.getValue("title")}</h2>
+            <a href="${product.getValue("url")}"><h2>${product.getValue("title")}</h2></a>
+            <h4>$ ${product.getValue("price")}</h4>
+        <#-- <h4>product.getValue("sale_price")</h4> -->
         </header>
         <figcaption class="br-details">
             <#assign str = (product.getValue("description"))?replace("<(?:.|\n)*?>|\\s+", " ", "r")>

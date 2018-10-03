@@ -9,6 +9,7 @@ import org.hippoecm.hst.configuration.internal.CanonicalInfo;
 import org.hippoecm.hst.configuration.sitemap.HstSiteMap;
 import org.hippoecm.hst.configuration.sitemap.HstSiteMapItem;
 import org.hippoecm.hst.container.RequestContextProvider;
+import org.hippoecm.hst.content.annotations.Persistable;
 import org.hippoecm.hst.core.component.HstComponentException;
 import org.hippoecm.hst.core.component.HstRequest;
 import org.hippoecm.hst.core.component.HstResponse;
@@ -78,10 +79,15 @@ public class ThematicControlPanelComponent extends BaseHstComponent {
     Map<String, String[]> params = request.getRequestContext().getBaseURL().getParameterMap();
     Map<String, String> properties = getComponentParameters();
 
+//    getPublicRequestParameter(request, "theme")
+
 
     String[] themes = params.getOrDefault("theme", new String[]{"*"});
     String theme = (themes[0].equalsIgnoreCase("*")) ? "*" : "\"" + themes[0] + "\"";
     StringBuffer currentURL = request.getRequestContext().getServletRequest().getRequestURL();
+
+
+
     String searchEndpoint = buildSearchEndpoint(properties, theme);
     try {
       Resource thematicSearch = broker.resolve("thematicSearch", searchEndpoint);
@@ -91,7 +97,7 @@ public class ThematicControlPanelComponent extends BaseHstComponent {
       request.setAttribute("error", new Boolean(false));
     } catch (ResourceException | ResourceAccessException e) {
       request.setAttribute("error", new Boolean(true));
-      log.error("Not able to resolve the resource :", e);
+      log.error("Not able to resolve Thematic Search resource :", e);
     }
   }
 
@@ -102,6 +108,8 @@ public class ThematicControlPanelComponent extends BaseHstComponent {
     try {
       FormMap map = new FormMap(request, new String[]{"theme"});
       theme = map.getField("theme").getValue();
+
+
       theme = theme.replaceAll(" ", "-");
 
 
@@ -146,11 +154,14 @@ public class ThematicControlPanelComponent extends BaseHstComponent {
         String redirect = request.getRequestContext().getHstLinkCreator().create(cleanPath + theme, requestContext.getResolvedMount().getMount()).toUrlForm(requestContext, true);
         response.sendRedirect(redirect);
       }
+
+
     } catch (RepositoryException | IOException e) {
       e.printStackTrace();
     }
     final HttpSession finalSession = request.getSession();
     finalSession.setAttribute("success", true);
+
 
   }
 
@@ -164,7 +175,7 @@ public class ThematicControlPanelComponent extends BaseHstComponent {
     this.validateTarget(session, parent.getPath() + "/" + encodedName, editingMount.getHstSite().getSiteMap());
     Node newSitemapNode = parent.addNode(encodedName, "hst:sitemapitem");
     lockHelper.acquireLock(newSitemapNode, 0L);
-    setSitemapItemProperties(siteMapItem, newSitemapNode, editingMount);
+    this.setSitemapItemProperties(siteMapItem, newSitemapNode, editingMount);
     Node prototypePage = session.getNodeByIdentifier(siteMapItem.getComponentConfigurationId());
     String prototypeApplicationId = JcrUtils.getStringProperty(prototypePage, "hst:applicationId", (String) null);
     String targetPageNodeName = this.getSiteMapPathPrefixPart(newSitemapNode) + "-" + prototypePage.getName();

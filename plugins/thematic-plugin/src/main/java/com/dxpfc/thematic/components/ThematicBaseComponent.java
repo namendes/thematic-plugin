@@ -1,6 +1,6 @@
 package com.dxpfc.thematic.components;
 
-import org.hippoecm.hst.component.support.bean.BaseHstComponent;
+import org.onehippo.cms7.essentials.components.CommonComponent;
 import org.hippoecm.hst.core.component.HstComponentException;
 import org.hippoecm.hst.core.component.HstRequest;
 import org.hippoecm.hst.core.component.HstResponse;
@@ -16,7 +16,7 @@ import org.springframework.web.client.ResourceAccessException;
 import java.util.Map;
 import java.util.UUID;
 
-public class ThematicBaseComponent extends BaseHstComponent {
+public class ThematicBaseComponent extends CommonComponent {
 
   private static Logger log = LoggerFactory.getLogger(ThematicBaseComponent.class);
 
@@ -27,45 +27,46 @@ public class ThematicBaseComponent extends BaseHstComponent {
     HstRequestContext requestContext = request.getRequestContext();
     Map<String, String[]> params = requestContext.getBaseURL().getParameterMap();
     String path = "?rows=%s&account_id=%s&domain_key=%s&request_id=%s&url=%s&fl=%s&sc2_mode=%s&request_type=%s&q=%s&sort=%s&start=%s&debug=%s&";
+    String themeName = "";
     String baseUrl = requestContext.getBaseURL().getRequestPath();
-    String splitUrl[] = baseUrl.split("/");
-    int urlLength = splitUrl.length;
-
-    String theme = splitUrl[urlLength-1];
-
+    try {
+      String splitUrl[] = baseUrl.split("/");
+      int urlLength = splitUrl.length;
+      themeName = splitUrl[urlLength - 1];
+    } catch (ArrayIndexOutOfBoundsException e){
+      throw new HstComponentException("Component not installed properly, please check sitemap entry", e);
+    }
     Map<String,String> properties = getComponentParameters();
 
     String sort = params.getOrDefault(ThematicConstants.SORT_ORDER, new String[]{""})[0];
     int page = new Integer(params.getOrDefault(ThematicConstants.PAGINATION, new String[]{"0"})[0]);
 
-    String fl = properties.get("fields");
-    String row = properties.get("max_results_per_page");
-    String start = Integer.toString(page * new Integer(row));
-    String accountId = properties.get("account_id");
-    String domainKey = properties.get("domain_key");
-    String sc2Mode = properties.get("sc2_mode");
-    String feRequestType = properties.get("request_type");
-    String debugMode = properties.get("debug_mode");
+    String fl = properties.get(ThematicConstants.PROPERTIES_FIELDS);
+    String resultsPerPage = properties.get(ThematicConstants.PROPERTIES_MAX_RESULTS_PER_PAGE);
+    String start = Integer.toString(page * Integer.parseInt(resultsPerPage));
+    String accountId = properties.get(ThematicConstants.PROPERTIES_ACCOUNT_ID);
+    String domainKey = properties.get(ThematicConstants.PROPERTIES_DOMAIN_KEY);
+    String sc2Mode = properties.get(ThematicConstants.PROPERTIES_SC2_MODE);
+    String feRequestType = properties.get(ThematicConstants.PROPERTIES_REQUEST_TYPE);
+    String debugMode = properties.get(ThematicConstants.PROPERTIES_DEBUG_MODE);
     String requestId = UUID.randomUUID().toString();
     String url = ThematicConstants.HIPPO_REF_URL + baseUrl;
 
+    try {
+      Resource thematic = broker.resolve("thematicResource", String.format(path, resultsPerPage, accountId, domainKey, requestId, url, fl, sc2Mode, feRequestType, themeName, sort, start, debugMode));
 
-    request.setAttribute("resp",new Boolean(false));
-   try {
-     Resource thematic = broker.resolve("thematicResource", String.format(path, row, accountId, domainKey, requestId, url, fl, sc2Mode, feRequestType, theme, sort, start, debugMode));
-
-     int items = (int) thematic.getValue("response/numFound");
-     if (thematic != null && items != 0) {
-       request.setAttribute("thematic", thematic);
-       request.setAttribute("sort",sort);
-       request.setAttribute("currentPage",page);
-       request.setAttribute("totalPages",items/Integer.parseInt(row));
-       request.setAttribute("resp", new Boolean(true));
-     }
-   } catch (ResourceException | ResourceAccessException e) {
-     log.error("Unable to resolve Thematic resource - ",e);
-     request.setAttribute("resp",new Boolean(false));
-   }
+      long items = (long) thematic.getValue("response/numFound");
+      if (thematic != null && items != 0) {
+        request.setAttribute("thematic", thematic);
+        request.setAttribute("sort",sort);
+        request.setAttribute("currentPage",page);
+        request.setAttribute("totalPages",1 + ((items-1)/Integer.parseInt(resultsPerPage)));
+      }else
+        super.pageNotFound(response);
+    } catch (ResourceException | ResourceAccessException e) {
+      log.error("Unable to resolve Thematic resource - ",e);
+      super.pageNotFound(response);
+    }
 
   }
 

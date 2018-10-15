@@ -1,57 +1,66 @@
-<!doctype html>
-<#include "../include/imports.ftl">
-<#import "product-grid-element.ftl" as grid>
-<@hst.webfile var="link" path="css/thematic.css" />
-<link rel="stylesheet" href="${link}">
-<head>
-    <#if thematic??>
-        <title>${thematic.getValue('page_header/title')}</title>
-        <meta name="keywords" content="${thematic.getValue('page_header/meta_keywords')}">
-        <meta name="description" content="${thematic.getValue('page_header/description')}">
-    </#if>
-    <div class="container1">
-        <@hst.include ref="container1"/>
-    </div>
-</head>
-<body>
-<div class="container2">
-    <@hst.include ref="container2"/>
-</div>
-<div class="container">
-    <form method="get" id="sort">
-        <label>Sort : </label>
-        <select name="sort" form="sort" onchange="this.form.submit()">
-            <option value="" <#if (sort == "")> selected="selected"</#if>>Relevance</option>
-            <option value="price asc" <#if (sort == "price asc")> selected="selected"</#if>>Price Ascending</option>
-            <option value="price desc" <#if (sort == "price desc")> selected="selected"</#if>>Price Descending</option>
-            <option value="title asc" <#if (sort == "title asc")> selected="selected"</#if>>Title Ascending</option>
-            <option value="title desc" <#if (sort == "title desc")> selected="selected"</#if>>Title Descending</option>
-        </select>
-    </form>
-    <br>
-    <div class="list">
-        <#if resp==true??>
-            <#list thematic.getValue('response').getValue('docs').children.collection as newsDoc>
-                <@grid.grid_element product=newsDoc/>
-            </#list>
-        <#else>
-            <h1>Failed to Fetch Thematic Page</h1>
-            <h3>Check whether this Thematic Page exists or not</h3>
+<html>
+    <#include "../include/imports.ftl">
+    <#import "product-grid-element.ftl" as grid>
+    <@hst.webfile var="thematicStyle" path="css/thematic.css" />
+    <@hst.webfile var="thematicJs" path="js/thematic.js" />
+    <head>
+        <#if thematic??>
+            <title>${thematic.getValue('page_header/title')}</title>
+            <meta name="keywords" content="${thematic.getValue('page_header/meta_keywords')}">
+            <meta name="description" content="${thematic.getValue('page_header/meta_description')}">
         </#if>
+    <div class="container1">
+            <@hst.include ref="container1"/>
     </div>
-    <div
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-
-        </ul>
-    </nav>
-    <div class="container3">
-    <@hst.include ref="container3"/>
-    </div>
-</div>
-<div class="container4">
-    <@hst.include ref="container4"/>
-</div>
-</body>
+    </head>
+    <body>
+        <div class="container2">
+            <@hst.include ref="container2"/>
+        </div>
+        <div class="container">
+            <#if sort??>
+                <form method="get" id="sort">
+                    <label>Sort : </label>
+                    <select name="sort" form="sort" onchange="this.form.submit()">
+                        <option value="" <#if (sort == "")> selected="selected"</#if>>Relevance</option>
+                        <option value="price asc" <#if (sort == "price asc")> selected="selected"</#if>>Price Ascending</option>
+                        <option value="price desc" <#if (sort == "price desc")> selected="selected"</#if>>Price Descending</option>
+                        <option value="title asc" <#if (sort == "title asc")> selected="selected"</#if>>Title Ascending</option>
+                        <option value="title desc" <#if (sort == "title desc")> selected="selected"</#if>>Title Descending</option>
+                    </select>
+                </form>
+            </#if>
+            <div class="list">
+                <#if thematic??>
+                    <#list thematic.getValue('response/docs').children.collection as newsDoc>
+                        <@grid.grid_element product=newsDoc/>
+                    </#list>
+                <#else>
+                    <h1>Failed to Fetch Thematic Page</h1>
+                    <h3>Check whether this Thematic Page exists or not</h3>
+                </#if>
+            </div>
+            <div class="pagination">
+                <#if (currentPage != 0)>
+                    <#-- First Page is always indexed from 0 -->
+                    <a onclick="redirectPage('0')">First</a>
+                    <a onclick="redirectPage(${currentPage-1})">${currentPage-1}</a>
+                </#if>
+                <a class="active">${currentPage}</a>
+                <#if (currentPage != totalPages)>
+                    <a onclick="redirectPage(${currentPage+1})">${currentPage+1}</a>
+                    <#-- Last Page is always indexed at totalPages -->
+                    <a onclick="redirectPage(${totalPages})">Last</a>
+                </#if>
+            </div>
+            <div class="container3">
+                <@hst.include ref="container3"/>
+            </div>
+        </div>
+        <div class="container4">
+            <@hst.include ref="container4"/>
+        </div>
+    </body>
+    <link rel="stylesheet" href="${thematicStyle}">
+    <script src="${thematicJs}"></script>
+</html>

@@ -87,7 +87,6 @@ public class ThematicControlPanelComponent extends BaseHstComponent {
     StringBuffer currentURL = request.getRequestContext().getServletRequest().getRequestURL();
 
 
-
     String searchEndpoint = buildSearchEndpoint(properties, theme);
     try {
       Resource thematicSearch = broker.resolve("thematicSearch", searchEndpoint);

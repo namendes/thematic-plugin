@@ -13,6 +13,7 @@
     <file action="copy" source="instructions/freemarker/css/thematic.css" target="{{webfilesCssRoot}}/thematic.css"/>
     <file action="copy" source="instructions/freemarker/css/control-panel.css" target="{{webfilesCssRoot}}/control-panel.css"/>
     <file action="copy" source="instructions/freemarker/js/control-panel.js" target="{{webfilesJsRoot}}/control-panel.js"/>
+    <file action="copy" source="instructions/freemarker/js/thematic.js" target="{{webfilesJsRoot}}/thematic.js"/>
   </instructionSet>
   <instructionSet>
     <mavenDependency targetPom="cms" groupId="com.dxpfc.thematic" artifactId="dxpfc-thematic-plugin" version="1.0.0-SNAPSHOT"/>

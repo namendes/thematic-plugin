@@ -79,6 +79,10 @@
             <artifactId>hippo-addon-crisp-hst</artifactId>
             <version>${hippo.addon-crisp.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.onehippo.cms7</groupId>
+            <artifactId>hippo-essentials-components-hst</artifactId>
+        </dependency>
     </dependencies>
 
 

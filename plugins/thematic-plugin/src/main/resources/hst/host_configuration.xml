@@ -19,6 +19,7 @@
             <sv:property sv:name="jcr:primaryType" sv:type="Name">
                 <sv:value>hst:virtualhost</sv:value>
             </sv:property>
+            <!-- TODO : Change this accordingly for each merchant  -->
             <sv:node sv:name="env1-i32xlarge">
                 <sv:property sv:name="jcr:primaryType" sv:type="Name">
                     <sv:value>hst:virtualhost</sv:value>
@@ -35,6 +36,7 @@
                     </sv:property>
                 </sv:node>
             </sv:node>
+            <!-- TODO : Change this accordingly for each merchant  -->
             <sv:node sv:name="env2-i32xlarge">
                 <sv:property sv:name="jcr:primaryType" sv:type="Name">
                     <sv:value>hst:virtualhost</sv:value>

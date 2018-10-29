@@ -56,7 +56,9 @@ img {
     border-radius: .25rem;
     background-color: #eee;
     box-shadow: 0 0 7px 0 #ccc, 0 0 55px 0 #eee;
+    /*border-bottom:1px solid blue;*/
 }
+
 .results__item img {
     border-radius: .25rem;
     margin: .5rem;
@@ -85,10 +87,23 @@ img {
     display: flex;
 }
 
-.column {
+.column1 {
     flex: 50%;
+    overflow: auto;
+    height: auto;
+    padding: .5rem;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;
 }
 
+.column2 {
+    flex: 50%;
+    overflow: auto;
+    height: auto;
+    padding: .5rem;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;
+}
 
 .customise {
     background-color : #31B0D5;
@@ -106,4 +121,12 @@ img {
 
 #formInput {
     display: none;
+}
+
+.selected {
+    background-color:grey;
+}
+
+.results ul li a {
+    border-bottom:1px solid blue;
 }

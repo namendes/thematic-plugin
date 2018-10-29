@@ -3,7 +3,7 @@
               xsi:schemaLocation="http://www.onehippo.org/essentials/instructions/instructions.xsd" xmlns="http://www.onehippo.org/essentials/instructions">
 
 
-  <instructionSet group="freemarker">
+  <instructionSet>
     <freemarker action="copy" source="instructions/freemarker/thematic-templates/base-thematic-template.ftl" target="{{freemarkerRoot}}/thematic-templates/base-thematic-template.ftl"/>
     <freemarker action="copy" source="instructions/freemarker/thematic-templates/product-grid-element.ftl" target="{{freemarkerRoot}}/thematic-templates/product-grid-element.ftl"/>
     <freemarker action="copy" source="instructions/freemarker/include/imports.ftl" target="{{freemarkerRoot}}/include/imports.ftl"/>
@@ -11,7 +11,7 @@
   </instructionSet>
   <instructionSet>
     <file action="copy" source="instructions/freemarker/css/thematic.css" target="{{webfilesCssRoot}}/thematic.css"/>
-    <file action="copy" source="instructions/freemarker/css/control-panel.css" target="{{webfilesCssRoot}}/control-panel.css"/>
+    <file action="copy" source="instructions/freeqqmarker/css/control-panel.css" target="{{webfilesCssRoot}}/control-panel.css"/>
     <file action="copy" source="instructions/freemarker/js/control-panel.js" target="{{webfilesJsRoot}}/control-panel.js"/>
     <file action="copy" source="instructions/freemarker/js/thematic.js" target="{{webfilesJsRoot}}/thematic.js"/>
   </instructionSet>

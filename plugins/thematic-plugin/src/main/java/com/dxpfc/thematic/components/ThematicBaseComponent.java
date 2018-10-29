@@ -8,14 +8,24 @@ import org.hippoecm.hst.core.component.HstRequest;
 import org.hippoecm.hst.core.component.HstResponse;
 import org.hippoecm.hst.core.request.HstRequestContext;
 import org.onehippo.cms7.crisp.api.broker.ResourceServiceBroker;
+import org.onehippo.cms7.crisp.api.exchange.ExchangeHint;
+import org.onehippo.cms7.crisp.api.exchange.ExchangeHintBuilder;
 import org.onehippo.cms7.crisp.api.resource.Resource;
 import org.onehippo.cms7.crisp.api.resource.ResourceException;
+import org.onehippo.cms7.crisp.api.resource.ResourceDataCache;
+import org.onehippo.cms7.crisp.api.resource.ValueMap;
+import org.onehippo.cms7.crisp.core.resource.DefaultValueMap;
 import org.onehippo.cms7.services.HippoServiceRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.client.ResourceAccessException;
 
+
 import java.io.IOException;
+
+import java.util.HashMap;
+import java.util.List;
+
 import java.util.Map;
 import java.util.UUID;
 
@@ -56,6 +66,9 @@ public class ThematicBaseComponent extends CommonComponent {
     String url = ThematicConstants.HIPPO_REF_URL + baseUrl;
 
     try {
+      ThematicExchangeHint hint = new ThematicExchangeHint();
+      hint.setMethodName(request.getRequestContext().getServletRequest().getMethod());
+      hint.setTheme(themeName);
       Resource thematic = broker.resolve("thematicResource", String.format(path, resultsPerPage, accountId, domainKey, requestId, url, fl, sc2Mode, feRequestType, themeName, sort, start, debugMode));
 
       int items = (int) thematic.getValue("response/numFound");
@@ -72,7 +85,6 @@ public class ThematicBaseComponent extends CommonComponent {
       log.error("Unable to resolve Thematic resource - ",e);
       super.pageNotFound(response);
     }
-
   }
 
 }

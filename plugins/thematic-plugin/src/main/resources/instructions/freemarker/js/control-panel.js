@@ -3,6 +3,8 @@ var selectedtheme="";
 function loadPreview(url) {
     var resUrl = url.replace(/ /g, "-");
     document.getElementById("previewPanel").setAttribute("src",resUrl);
+    document.getElementByClassName("selected").classList.remove("selected");
+    this.classList.add("selected");
     selectedtheme=url;
 }
 

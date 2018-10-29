@@ -13,7 +13,7 @@
     <div class="column1">
         <form method="get">
             <div class="search">
-                <input name="theme" type="text" id="searchField" class="search__input" placeholder="Search Thematic" />
+                <input name="theme" type="text" id="searchField" class="search_input" placeholder="Search Thematic" />
                 <button type="submit">
                     <#--TODO change to local url-->
                     <img src="https://cdn1.iconfinder.com/data/icons/TWG_Retina_Icons/24/magnifier.png"/>
@@ -23,13 +23,13 @@
                 <#list searchResults.children.collection as result>
                     <#if count == 1>
                         <#assign firsturl=result.getValue("theme")>
-                    <li class="results__item" id="default_Sel" tabindex="${count}" onclick="loadPreview('${result.getValue("theme")}')" >
+                    <li class="results_item_${count} selected" onclick="loadPreview('${result.getValue("theme")}')" >
                         <p>${result.getValue("theme")}</p>
                         <p>Revenue - ${result.getValue("revenue")}<br>Visits - ${result.getValue("visits")}</p>
                     </li>
                         <#assign count++>
                     <#else>
-                    <li class="results__item" tabindex="${count}" onclick="loadPreview('${result.getValue("theme")}')">
+                    <li class="results_item_${count}" onclick="loadPreview('${result.getValue("theme")}')">
                         <p>${result.getValue("theme")}</p>
                         <p>Revenue - ${result.getValue("revenue")}<br>Visits - ${result.getValue("visits")}</p>
                     </li>

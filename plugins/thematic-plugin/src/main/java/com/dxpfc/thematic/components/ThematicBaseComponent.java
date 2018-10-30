@@ -62,6 +62,7 @@ public class ThematicBaseComponent extends CommonComponent {
     String sc2Mode = properties.get(ThematicConstants.PROPERTIES_SC2_MODE);
     String feRequestType = properties.get(ThematicConstants.PROPERTIES_REQUEST_TYPE);
     String debugMode = properties.get(ThematicConstants.PROPERTIES_DEBUG_MODE);
+    String defaultSeparator = properties.get(ThematicConstants.PROPERTIES_DEFAULT_SEPARATOR);
     String requestId = UUID.randomUUID().toString();
     String url = ThematicConstants.HIPPO_REF_URL + baseUrl;
 

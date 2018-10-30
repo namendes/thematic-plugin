@@ -12,6 +12,7 @@ public class ThematicConstants {
   public static final String PROPERTIES_SC2_MODE = "sc2_mode";
   public static final String PROPERTIES_REQUEST_TYPE = "request_type";
   public static final String PROPERTIES_DEBUG_MODE = "debug_mode";
+  public static final String PROPERTIES_DEFAULT_SEPARATOR = "-";
 
 
 }

@@ -106,7 +106,8 @@ public class ThematicControlPanelComponent extends BaseHstComponent {
     Session session;
     try {
       FormMap map = new FormMap(request, new String[]{"theme"});
-      theme = map.getField("theme").getValue().replaceAll(" ", "-");
+      //TODO::theme = map.getField("theme").getValue().replaceAll(" ", "-");
+      theme = map.getField("theme").getValue();
 
       HstRequestContext requestContext = RequestContextProvider.get();
       String baseSiteMapUuid = requestContext.getResolvedMount().getMount().getChannel().getSiteMapId();

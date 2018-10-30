@@ -14,13 +14,13 @@
     <#if leftNav != "">
     <div class="sidenav">
         <#if leftNav.getValue("heading")??>
-            <a href="#">${leftNav.getValue("heading")}</a>
+            <a href="#" style="color:white;">${leftNav.getValue("heading")}</a>
             <#if leftNav.getValue("attribute_groups")??>
                 <#list leftNav.getValue("attribute_groups").children.collection as attrGroup>
                     <#if attrGroup.getValue("heading")??>
-                    <a href="#">${attrGroup.getValue("heading")}</a>
+                    <a href="#" style="color:white;margin-left: 10px;">${attrGroup.getValue("heading")}</a>
                         <#list attrGroup.getValue("links").children.collection as attrLink>
-                        <a href="${attrLink.getValue("url")}">${attrLink.getValue("anchor_text")}</a>
+                        <a href="${attrLink.getValue("url")}" style="margin-left: 20px;">${attrLink.getValue("anchor_text")}</a>
                         </#list>
                     </#if>
                 </#list>

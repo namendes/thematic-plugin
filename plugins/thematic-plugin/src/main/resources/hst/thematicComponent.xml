@@ -13,6 +13,7 @@
         <sv:value>sc2_mode</sv:value>
         <sv:value>request_type</sv:value>
         <sv:value>debug_mode</sv:value>
+        <sv:value>default_separator</sv:value>
     </sv:property>
     <sv:property sv:name="hst:parametervalues" sv:type="String" sv:multiple="true">
         <sv:value>pid,title,brand,price,sale_price,promotions,thumb_image,sku_thumb_images,sku_swatch_images,sku_color_group,url,price_range,sale_price_range,description</sv:value>
@@ -22,5 +23,6 @@
         <sv:value>True</sv:value>
         <sv:value>thematic</sv:value>
         <sv:value>true</sv:value>
+        <sv:value>-</sv:value>
     </sv:property>
 </sv:node>

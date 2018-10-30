@@ -69,16 +69,16 @@ public class ThematicBaseComponent extends CommonComponent {
       ThematicExchangeHint hint = new ThematicExchangeHint();
       hint.setMethodName(request.getRequestContext().getServletRequest().getMethod());
       hint.setTheme(themeName);
-      Resource thematic = broker.resolve("thematicResource", String.format(path, resultsPerPage, accountId, domainKey, requestId, url, fl, sc2Mode, feRequestType, themeName, sort, start, debugMode));
+      Resource thematic = broker.resolve(ThematicConstants.CRISP_RESOURCE_THEMATIC_PAGE, String.format(path, resultsPerPage, accountId, domainKey, requestId, url, fl, sc2Mode, feRequestType, themeName, sort, start, debugMode));
 
-      int items = (int) thematic.getValue("response/numFound");
-      String leftNav = (String)thematic.getValue("page_header/left_nav");
+      int items = (int) thematic.getValue(ThematicConstants.PATH_PRODUCTS_FOUND);
+      String leftNav = (String)thematic.getValue(ThematicConstants.PATH_THEME_LEFTNAV);
       if (thematic != null && items != 0) {
-        request.setAttribute("thematic", thematic);
-        request.setAttribute("sort",sort);
-        request.setAttribute("currentPage",page);
-        request.setAttribute("totalPages",1 + ((items-1)/Integer.parseInt(resultsPerPage)));
-        request.setAttribute("leftNav",leftNav.isEmpty() ? "" : new JacksonResource(new ObjectMapper().readTree(leftNav)));
+        request.setAttribute(ThematicConstants.ATTRIBUTE_THEMATIC_RESPONSE, thematic);
+        request.setAttribute(ThematicConstants.ATTRIBUTE_THEMATIC_PRODUCT_SORT,sort);
+        request.setAttribute(ThematicConstants.ATTRIBUTE_THEMATIC_CURRENT_PAGE,page);
+        request.setAttribute(ThematicConstants.ATTRIBUTE_THEMATIC_TOTAL_PAGES,1 + ((items-1)/Integer.parseInt(resultsPerPage)));
+        request.setAttribute(ThematicConstants.ATTRIBUTE_THEMATIC_PAGE_LEFTNAV,leftNav.isEmpty() ? "" : new JacksonResource(new ObjectMapper().readTree(leftNav)));
       }else
         super.pageNotFound(response);
     } catch (ResourceException | ResourceAccessException | IOException e) {

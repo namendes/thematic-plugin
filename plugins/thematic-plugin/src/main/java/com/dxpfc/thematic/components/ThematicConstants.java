@@ -13,5 +13,15 @@ public class ThematicConstants {
   public static final String PROPERTIES_REQUEST_TYPE = "request_type";
   public static final String PROPERTIES_DEBUG_MODE = "debug_mode";
 
+  public static final String PATH_PRODUCTS_FOUND = "response/numFound";
+  public static final String PATH_THEME_LEFTNAV = "page_header/left_nav";
 
+  public static final String CRISP_RESOURCE_THEMATIC_PAGE = "thematicResource";
+  public static final String CRISP_RESOURCE_THEMATIC_SEARCH = "thematicSearch";
+
+  public static final String ATTRIBUTE_THEMATIC_RESPONSE = "thematic";
+  public static final String ATTRIBUTE_THEMATIC_PRODUCT_SORT = "sort";
+  public static final String ATTRIBUTE_THEMATIC_CURRENT_PAGE = "currentPage";
+  public static final String ATTRIBUTE_THEMATIC_TOTAL_PAGES = "totalPages";
+  public static final String ATTRIBUTE_THEMATIC_PAGE_LEFTNAV = "leftNav";
 }

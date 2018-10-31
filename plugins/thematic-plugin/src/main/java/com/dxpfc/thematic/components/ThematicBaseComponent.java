@@ -52,7 +52,7 @@ public class ThematicBaseComponent extends CommonComponent {
     Map<String,String> properties = getComponentParameters();
 
     String sort = params.getOrDefault(ThematicConstants.SORT_ORDER, new String[]{""})[0];
-    int page = new Integer(params.getOrDefault(ThematicConstants.PAGINATION, new String[]{"1"})[0]);
+    int page = new Integer(params.getOrDefault(ThematicConstants.PAGINATION, new String[]{ThematicConstants.DEFAULT_PAGE})[0]);
 
     String fl = properties.get(ThematicConstants.PROPERTIES_FIELDS);
     String resultsPerPage = properties.get(ThematicConstants.PROPERTIES_MAX_RESULTS_PER_PAGE);

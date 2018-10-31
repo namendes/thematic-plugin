@@ -24,4 +24,6 @@ public class ThematicConstants {
   public static final String ATTRIBUTE_THEMATIC_CURRENT_PAGE = "currentPage";
   public static final String ATTRIBUTE_THEMATIC_TOTAL_PAGES = "totalPages";
   public static final String ATTRIBUTE_THEMATIC_PAGE_LEFTNAV = "leftNav";
+
+  public static final String DEFAULT_PAGE = "1";
 }

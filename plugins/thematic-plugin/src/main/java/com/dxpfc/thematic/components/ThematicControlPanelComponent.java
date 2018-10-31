@@ -89,8 +89,8 @@ public class ThematicControlPanelComponent extends BaseHstComponent {
 
     String searchEndpoint = buildSearchEndpoint(properties, theme);
     try {
-      Resource thematicSearch = broker.resolve("thematicSearch", searchEndpoint);
-      Object searchResults = thematicSearch.getValue("response/docs");
+      Resource thematicSearch = broker.resolve(ThematicConstants.CRISP_RESOURCE_THEMATIC_SEARCH, searchEndpoint);
+      Object searchResults = thematicSearch.getValue("docs");
       request.setAttribute("searchResults", searchResults != null ? searchResults : new Array[]{});
       request.setAttribute("requestURL", currentURL);
       request.setAttribute("error", new Boolean(false));
@@ -389,9 +389,11 @@ public class ThematicControlPanelComponent extends BaseHstComponent {
 
   private String buildSearchEndpoint(Map<String, String> properties, String theme) {
     return properties.get("account_id") +
-        "_lpm_pagedata_v2/select?q=theme:" + theme +
-        "&rows=" + properties.get("rows") +
-        "&fl=" + properties.get("fl") + "&wt=" + properties.get("wt");
+            "/pages?_br_in_auth_key=" + properties.get("auth_key") +
+            "&type=" + "all" +
+            "&rows=" + properties.get("rows") +
+            "&sort_by=" + properties.get("sort_by") +
+            "&query=" + theme;
   }
 
 }

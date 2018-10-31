@@ -52,7 +52,7 @@ public class ThematicBaseComponent extends CommonComponent {
     Map<String,String> properties = getComponentParameters();
 
     String sort = params.getOrDefault(ThematicConstants.SORT_ORDER, new String[]{""})[0];
-    int page = new Integer(params.getOrDefault(ThematicConstants.PAGINATION, new String[]{"1"})[0]);
+    int page = new Integer(params.getOrDefault(ThematicConstants.PAGINATION, new String[]{ThematicConstants.DEFAULT_PAGE})[0]);
 
     String fl = properties.get(ThematicConstants.PROPERTIES_FIELDS);
     String resultsPerPage = properties.get(ThematicConstants.PROPERTIES_MAX_RESULTS_PER_PAGE);
@@ -70,16 +70,16 @@ public class ThematicBaseComponent extends CommonComponent {
       ThematicExchangeHint hint = new ThematicExchangeHint();
       hint.setMethodName(request.getRequestContext().getServletRequest().getMethod());
       hint.setTheme(themeName);
-      Resource thematic = broker.resolve("thematicResource", String.format(path, resultsPerPage, accountId, domainKey, requestId, url, fl, sc2Mode, feRequestType, themeName, sort, start, debugMode));
+      Resource thematic = broker.resolve(ThematicConstants.CRISP_RESOURCE_THEMATIC_PAGE, String.format(path, resultsPerPage, accountId, domainKey, requestId, url, fl, sc2Mode, feRequestType, themeName, sort, start, debugMode));
 
-      int items = (int) thematic.getValue("response/numFound");
-      String leftNav = (String)thematic.getValue("page_header/left_nav");
+      int items = (int) thematic.getValue(ThematicConstants.PATH_PRODUCTS_FOUND);
+      String leftNav = (String)thematic.getValue(ThematicConstants.PATH_THEME_LEFTNAV);
       if (thematic != null && items != 0) {
-        request.setAttribute("thematic", thematic);
-        request.setAttribute("sort",sort);
-        request.setAttribute("currentPage",page);
-        request.setAttribute("totalPages",1 + ((items-1)/Integer.parseInt(resultsPerPage)));
-        request.setAttribute("leftNav",leftNav.isEmpty() ? "" : new JacksonResource(new ObjectMapper().readTree(leftNav)));
+        request.setAttribute(ThematicConstants.ATTRIBUTE_THEMATIC_RESPONSE, thematic);
+        request.setAttribute(ThematicConstants.ATTRIBUTE_THEMATIC_PRODUCT_SORT,sort);
+        request.setAttribute(ThematicConstants.ATTRIBUTE_THEMATIC_CURRENT_PAGE,page);
+        request.setAttribute(ThematicConstants.ATTRIBUTE_THEMATIC_TOTAL_PAGES,1 + ((items-1)/Integer.parseInt(resultsPerPage)));
+        request.setAttribute(ThematicConstants.ATTRIBUTE_THEMATIC_PAGE_LEFTNAV,leftNav.isEmpty() ? "" : new JacksonResource(new ObjectMapper().readTree(leftNav)));
       }else
         super.pageNotFound(response);
     } catch (ResourceException | ResourceAccessException | IOException e) {

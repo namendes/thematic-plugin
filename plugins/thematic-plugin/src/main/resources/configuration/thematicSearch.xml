@@ -48,7 +48,7 @@
   </sv:property>
   <sv:property sv:name="crisp:propvalues" sv:type="String" sv:multiple="true">
     <sv:value>true</sv:value>
-    <sv:value>http://organic-solr-frontend.us-east-1.ec2.bloomreach.com/solr/</sv:value>
+    <sv:value>https://tools.bloomreach.com/pages/internal/v1/merchants/</sv:value>
   </sv:property>
 </sv:node>
 

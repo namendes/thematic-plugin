@@ -13,6 +13,7 @@ public class ThematicConstants {
   public static final String PROPERTIES_REQUEST_TYPE = "request_type";
   public static final String PROPERTIES_DEBUG_MODE = "debug_mode";
   public static final String PROPERTIES_DEFAULT_SEPARATOR = "-";
+  public static final String PROPERTIES_THEMATIC_SITEMAP_PATH = "thematicPageSitemapPath";
 
 
 }

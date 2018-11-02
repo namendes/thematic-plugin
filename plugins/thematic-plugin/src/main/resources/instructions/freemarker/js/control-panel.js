@@ -1,10 +1,10 @@
 var selectedtheme="";
 
-function loadPreview(url) {
+function loadPreview(url, className) {
     var resUrl = url.replace(/ /g, "-");
     document.getElementById("previewPanel").setAttribute("src",resUrl);
-    document.getElementByClassName("selected").classList.remove("selected");
-    this.classList.add("selected");
+    document.getElementsByClassName("selected")[0].classList.remove("selected");
+    document.getElementsByClassName(className)[0].classList.add("selected");
     selectedtheme=url;
 }
 
@@ -14,7 +14,7 @@ function redirect() {
     if (injector) {
         injector.get('$rootScope').$apply(function() {
             var channelService = injector.get('ChannelService');
-            channelService.recordOwnChange();
+            channelService.reload();
         });
     }
 }

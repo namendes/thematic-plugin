@@ -158,7 +158,6 @@ public class ThematicControlPanelComponent extends BaseHstComponent {
         siteMapItem.setPrimaryDocumentRepresentation(document);
 
         final Node createdSitemapNode = createSitemapNode(siteMapItem, sitemapNode.getIdentifier(), requestContext, editingMount);
-        session.save();
         unlockAndReLockLandingPages(createdSitemapNode, requestContext);
 
         String redirect = request.getRequestContext().getHstLinkCreator().create(cleanPath + theme, requestContext.getResolvedMount().getMount()).toUrlForm(requestContext, true);

@@ -1,11 +1,11 @@
 {
-  "id": "thematicPlugin",
+  "id": "Thematic Pages Plugin",
   "name": "Thematic",
   "icon": "/essentials/feature/images/thematic.png",
-  "introduction": "Merchant will be able to use Bloomreach Thematic.",
+  "introduction": "The plugin allows the merchant to use Bloomreach Thematic pages, search for them and configure them.",
   "imageUrls": [
   ],
-  "documentationLink": "https://www.onehippo.org/library/setup/hst-components/search-component.html",
+  "documentationLink": "https://www.onehippo.org/library/setup/hst-components/thematic-pages-plugin.html",
   "packageFile": "/META-INF/thematic_instructions.xml",
   "type": "feature",
   "vendor" : {

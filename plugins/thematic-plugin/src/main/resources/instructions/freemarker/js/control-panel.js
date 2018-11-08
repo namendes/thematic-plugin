@@ -1,35 +1,35 @@
-var selectedtheme="";
+var selectedtheme = "";
 
 function loadPreview(url, className) {
     var resUrl = url.replace(/ /g, "-");
-    document.getElementById("previewPanel").setAttribute("src",resUrl);
+    document.getElementById("previewPanel").setAttribute("src", resUrl);
     document.getElementsByClassName("selected")[0].classList.add("results_item");
     document.getElementsByClassName("selected")[0].classList.remove("selected");
     document.getElementsByClassName(className)[0].classList.remove("results_item");
     document.getElementsByClassName(className)[0].classList.add("selected");
-    selectedtheme=url;
+    selectedtheme = url;
 }
 
 function redirect() {
-    document.getElementById("formInput").setAttribute("value",selectedtheme);
+    document.getElementById("formInput").setAttribute("value", selectedtheme);
     var injector = parent['angular'].element(parent.document.body).injector();
     if (injector) {
-        injector.get('$rootScope').$apply(function() {
+        injector.get('$rootScope').$apply(function () {
             var channelService = injector.get('ChannelService');
             channelService.reload();
         });
     }
 }
 
-window.onload = function() {
+window.onload = function () {
     document.getElementById("default_Sel").focus();
 };
 
 
-var links = document.querySelectorAll('.ripplelink');
+var links = document.querySelectorAll('.rippleLink');
 
 for (var i = 0, len = links.length; i < len; i++) {
-    links[i].addEventListener('click', function(e) {
+    links[i].addEventListener('click', function (e) {
         var targetEl = e.target;
         var inkEl = targetEl.querySelector('.ink');
 
@@ -48,6 +48,38 @@ for (var i = 0, len = links.length; i < len; i++) {
         inkEl.classList.add('animate');
     }, false);
 }
+
+
+function ready(id) {
+    document.getElementById(id).style.display = "block";
+}
+
+
+function load() {
+    adjustSize();
+
+    var iframeDocument = document.getElementById("previewPanel").contentDocument;
+    var overlay = iframeDocument.createElement('div');
+    overlay.style.position = 'fixed';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.zIndex = '100000';
+    overlay.style.top = 0;
+    overlay.style.left = 0;
+
+    iframeDocument.body.appendChild(overlay);
+}
+
+function adjustSize() {
+    var iframe = document.getElementById("previewPanel");
+
+    if (iframe) {
+        iframe.style.width = `${document.body.clientWidth}px`;
+    }
+}
+
+window.addEventListener('resize', adjustSize);
+
 /*
 
 var current_frame = 0;

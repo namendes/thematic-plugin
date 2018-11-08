@@ -10,7 +10,7 @@
       <sv:value>hst:pages/thematicBasePage</sv:value>
     </sv:property>
   </sv:node>
-  <sv:node sv:name="thematic-control-panel">
+  <sv:node sv:name="thematic-pages">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
       <sv:value>hst:sitemapitem</sv:value>
     </sv:property>

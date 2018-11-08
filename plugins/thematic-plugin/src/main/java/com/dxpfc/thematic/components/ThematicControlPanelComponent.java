@@ -104,6 +104,7 @@ public class ThematicControlPanelComponent extends BaseHstComponent {
     try {
       Resource thematicSearch = broker.resolve(ThematicConstants.CRISP_RESOURCE_THEMATIC_SEARCH, searchEndpoint);
       Object searchResults = thematicSearch.getValue("docs");
+      request.setAttribute("numResults", thematicSearch.getValue("numFound"));
       request.setAttribute("searchResults", searchResults != null ? searchResults : new Array[]{});
       request.setAttribute("requestURL", currentURL);
       request.setAttribute("error", new Boolean(false));
@@ -118,9 +119,9 @@ public class ThematicControlPanelComponent extends BaseHstComponent {
     String theme;
     Session session;
     try {
-      FormMap map = new FormMap(request, new String[]{"theme"});
+      FormMap map = new FormMap(request, new String[]{"theme_name"});
       //TODO::theme = map.getField("theme").getValue().replaceAll(" ", "-");
-      theme = map.getField("theme").getValue();
+      theme = map.getField("theme_name").getValue();
 
       HstRequestContext requestContext = RequestContextProvider.get();
       session = requestContext.getSession();

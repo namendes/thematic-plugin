@@ -47,7 +47,7 @@
     <sv:value>base.uri</sv:value>
   </sv:property>
   <sv:property sv:name="crisp:propvalues" sv:type="String" sv:multiple="true">
-    <sv:value>true</sv:value>
+    <sv:value>false</sv:value>
     <sv:value>https://tools.bloomreach.com/pages/internal/v1/merchants/</sv:value>
   </sv:property>
 </sv:node>

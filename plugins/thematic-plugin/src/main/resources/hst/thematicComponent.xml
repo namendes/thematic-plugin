@@ -12,7 +12,6 @@
         <sv:value>domain_key</sv:value>
         <sv:value>sc2_mode</sv:value>
         <sv:value>request_type</sv:value>
-        <sv:value>debug_mode</sv:value>
         <sv:value>default_separator</sv:value>
     </sv:property>
     <sv:property sv:name="hst:parametervalues" sv:type="String" sv:multiple="true">
@@ -22,7 +21,6 @@
         <sv:value>neimanmarcus_com</sv:value>
         <sv:value>True</sv:value>
         <sv:value>thematic</sv:value>
-        <sv:value>true</sv:value>
         <sv:value>-</sv:value>
     </sv:property>
 </sv:node>

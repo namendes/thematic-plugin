@@ -163,6 +163,11 @@ img {
 
 }
 
+.customise_tag {
+    font-size: 13px;
+    color: #697279;
+}
+
 .results_item:hover {
     background-color: #DBDDDE;
     transition: all 0.6s ease;

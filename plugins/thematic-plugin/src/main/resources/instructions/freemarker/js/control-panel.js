@@ -1,8 +1,8 @@
 var selectedtheme = "";
 
-function loadPreview(url, className) {
-    var resUrl = url.replace(/ /g, "-");
-    document.getElementById("previewPanel").setAttribute("src", resUrl);
+function loadPreview(url, urlPath, className) {
+    var resUrl = url;//.replace(/ /g, "-");
+    document.getElementById("previewPanel").setAttribute("src", urlPath + resUrl);
     document.getElementsByClassName("selected")[0].classList.add("results_item");
     document.getElementsByClassName("selected")[0].classList.remove("selected");
     document.getElementsByClassName(className)[0].classList.remove("results_item");

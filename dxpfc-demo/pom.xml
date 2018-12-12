@@ -5,14 +5,14 @@
   <parent>
     <groupId>org.onehippo.cms7</groupId>
     <artifactId>hippo-cms7-release</artifactId>
-    <version>12.4.0</version>
+    <version>12.6.0</version>
   </parent>
 
   <name>DXPFC Demo Project</name>
   <description>DXPFC Demo Project</description>
   <groupId>com.dxpfc</groupId>
   <artifactId>dxpfc-demo</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <!-- 

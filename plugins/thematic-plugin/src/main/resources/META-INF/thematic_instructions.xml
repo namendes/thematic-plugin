@@ -16,24 +16,24 @@
     <file action="copy" source="instructions/freemarker/js/thematic.js" target="{{webfilesJsRoot}}/thematic.js"/>
   </instructionSet>
   <instructionSet>
-    <mavenDependency targetPom="cms" groupId="com.dxpfc.thematic" artifactId="dxpfc-thematic-plugin" version="1.0.0-SNAPSHOT"/>
-    <mavenDependency targetPom="site" groupId="com.dxpfc.thematic" artifactId="dxpfc-thematic-plugin" version="1.0.0-SNAPSHOT"/>
+    <mavenDependency targetPom="cms-dependencies" groupId="com.dxpfc.thematic" artifactId="dxpfc-thematic-plugin" version="2.0.0-SNAPSHOT"/>
+    <mavenDependency targetPom="site-components" groupId="com.dxpfc.thematic" artifactId="dxpfc-thematic-plugin" version="2.0.0-SNAPSHOT"/>
     <!--<execute class="org.onehippo.cms7.essentials.plugin.crisp.CrispInstruction"/>-->
   </instructionSet>
   <instructionSet>
     <xml action="copy" overwrite="false" source="configuration/thematicResource.xml" target="/hippo:configuration/hippo:modules/crispregistry/hippo:moduleconfig/crisp:resourceresolvercontainer"/>
     <xml action="copy" overwrite="false" source="configuration/thematicSearch.xml" target="/hippo:configuration/hippo:modules/crispregistry/hippo:moduleconfig/crisp:resourceresolvercontainer"/>
-    <xml action="copy" overwrite="false" source="hst/baseThematicTemplate.xml" target="/hst:hst/hst:configurations/hst:default/hst:templates"/>
-    <xml action="copy" overwrite="false" source="hst/thematicControlPanelTemplate.xml" target="/hst:hst/hst:configurations/hst:default/hst:templates"/>
-    <xml action="copy" overwrite="false" source="hst/thematicComponent.xml" target="/hst:hst/hst:configurations/hst:default/hst:components"/>
-    <xml action="copy" overwrite="false" source="hst/thematicControlPanelComponent.xml" target="/hst:hst/hst:configurations/hst:default/hst:components"/>
-    <xml action="copy" overwrite="false" source="hst/thematicBasePage.xml" target="/hst:hst/hst:configurations/hst:default/hst:pages"/>
-    <xml action="copy" overwrite="false" source="hst/thematicBasePage.xml" target="/hst:hst/hst:configurations/{{namespace}}/hst:prototypepages"/>
-    <xml action="copy" overwrite="false" source="hst/defaultPrototypePage.xml" target="/hst:hst/hst:configurations/hst:default"/>
-    <xml action="copy" overwrite="false" source="hst/thematicBasePage.xml" target="/hst:hst/hst:configurations/hst:default/hst:prototypepages"/>
-    <xml action="copy" overwrite="false" source="hst/thematicControlPanel.xml" target="/hst:hst/hst:configurations/hst:default/hst:pages"/>
-    <xml action="copy" overwrite="false" source="hst/thematicControlPanelSitemap.xml" target="/hst:hst/hst:configurations/{{namespace}}"/>
-    <xml action="copy" overwrite="false" source="hst/thematic.xml" target="/hst:hst/hst:configurations/{{namespace}}/hst:workspace/hst:sitemap"/>
+    <xml action="copy" overwrite="false" source="hst/baseThematicTemplate.xml" target="{{hstRoot}}/hst:configurations/hst:default/hst:templates"/>
+    <xml action="copy" overwrite="false" source="hst/thematicControlPanelTemplate.xml" target="{{hstRoot}}/hst:configurations/hst:default/hst:templates"/>
+    <xml action="copy" overwrite="false" source="hst/thematicComponent.xml" target="{{hstRoot}}/hst:configurations/hst:default/hst:components"/>
+    <xml action="copy" overwrite="false" source="hst/thematicControlPanelComponent.xml" target="{{hstRoot}}/hst:configurations/hst:default/hst:components"/>
+    <xml action="copy" overwrite="false" source="hst/thematicBasePage.xml" target="{{hstRoot}}/hst:configurations/hst:default/hst:pages"/>
+    <xml action="copy" overwrite="false" source="hst/thematicBasePage.xml" target="{{hstRoot}}/hst:configurations/{{namespace}}/hst:prototypepages"/>
+    <xml action="copy" overwrite="false" source="hst/defaultPrototypePage.xml" target="{{hstRoot}}/hst:configurations/hst:default"/>
+    <xml action="copy" overwrite="false" source="hst/thematicBasePage.xml" target="{{hstRoot}}/hst:configurations/hst:default/hst:prototypepages"/>
+    <xml action="copy" overwrite="false" source="hst/thematicControlPanel.xml" target="{{hstRoot}}/hst:configurations/hst:default/hst:pages"/>
+    <xml action="copy" overwrite="false" source="hst/thematicControlPanelSitemap.xml" target="{{hstRoot}}/hst:configurations/{{namespace}}"/>
+    <xml action="copy" overwrite="false" source="hst/thematic.xml" target="{{hstRoot}}/hst:configurations/{{namespace}}/hst:workspace/hst:sitemap"/>
 
   </instructionSet>
 

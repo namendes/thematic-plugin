@@ -18,6 +18,11 @@ public class ThematicExchangeHint implements ExchangeHint {
     private Map<String, List<String>> unmodifiableRequestHeaders = Collections.emptyMap();
     private Object requestBody;
     private String theme;
+    private int responseStatusCode;
+    private Map<String, List<String>> responseHeaders;
+    private Map<String, List<String>> unmodifiableResponseHeaders = Collections.emptyMap();
+    private Object responseBody;
+    private boolean noCache;
 
     ThematicExchangeHint() {
     }
@@ -81,4 +86,41 @@ public class ThematicExchangeHint implements ExchangeHint {
         }
         return sb.toString();
     }
+
+    public int getResponseStatusCode() {
+        return this.responseStatusCode;
+    }
+
+    public void setResponseStatusCode(int responseStatusCode) {
+        this.responseStatusCode = responseStatusCode;
+    }
+
+    public Map<String, List<String>> getResponseHeaders() {
+        return this.unmodifiableResponseHeaders;
+    }
+
+    public void setResponseHeaders(Map<String, List<String>> responseHeaders) {
+        this.responseHeaders = new LinkedHashMap();
+        this.unmodifiableResponseHeaders = Collections.unmodifiableMap(this.responseHeaders);
+        if (responseHeaders != null) {
+            this.responseHeaders.putAll(responseHeaders);
+        }
+    }
+
+    public Object getResponseBody() {
+        return this.responseBody;
+    }
+
+    public void setResponseBody(Object responseBody) {
+        this.responseBody = responseBody;
+    }
+
+    public boolean isNoCache() {
+        return this.noCache;
+    }
+
+    public void setNoCache(boolean noCache) {
+        this.noCache = noCache;
+    }
+
 }

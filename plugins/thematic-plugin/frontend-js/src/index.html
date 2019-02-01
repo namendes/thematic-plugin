@@ -1,0 +1,85 @@
+<!--
+  Copyright 2018 Hippo B.V. (http://www.onehippo.com)
+-->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Thematic Pages Control Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="css/control-panel.css" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+</head>
+<body>
+
+<#assign count=0>
+<div class="row" id="main">
+  <div>
+    <form method="get" autocomplete="off">
+      <div class="search_box_parent" >
+        <div class="search">
+          <input name="theme" type="text" class="search_input" placeholder="Search thematic pages" />
+          <button class="search_button" type="submit">
+            <#--TODO change to local url-->
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="#92a0a5" d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+              <path d="M0 0h24v24H0z" fill="none"/>
+            </svg>
+          </button>
+        </div>
+        <div class="response_count">
+          Items : ${numResults}
+        </div>
+      </div>
+    </form>
+    <ul class="results">
+      <#list searchResults.children.collection as result>
+      <#if count == 0>
+      <#assign firsturl=result.getValue("theme")>
+      <li class="rippleLink results_item_${count} selected" onclick="loadPreview('${result.getValue("theme")}', '${urlPath}', 'results_item_${count}')" >
+      <div class="result_theme">${result.getValue("h1_default")} <br> <div class="customise_tag"> ${customizationList.getChildren().get(count).getValue("isCustomized")}</div> </div>
+      <div class="result_details">Revenue: $${result.getValue("revenue")}<br>Visits: ${result.getValue("visits")}</div>
+      </li>
+      <#assign count++>
+      <#else>
+      <li class="rippleLink results_item results_item_${count}" onclick="loadPreview('${result.getValue("theme")}', '${urlPath}', 'results_item_${count}')">
+      <div class=" result_theme">${result.getValue("h1_default")}<br>  <div class="customise_tag"> ${customizationList.getChildren().get(count).getValue("isCustomized")}</div> </div>
+      <div class=" result_details">Revenue: $${result.getValue("revenue")}<br>Visits: ${result.getValue("visits")}</div>
+      </li>
+      <#assign count++>
+    </#if>
+  </#list>
+  </ul>
+</div>
+
+<div id="customiseDiv" class="rippleLink">
+  <form action="<@hst.actionURL/>" method="post">
+    <p> <input id="formInput" type="text" name="theme_name"></p>
+    <p> <input class="customise" type="submit" value="Customize" onclick="redirect()"></p>
+  </form>
+</div>
+
+
+<script src="js/control-panel.js"></script>
+
+
+<script>
+  window.BR_EXTENSION = {
+    cmsExtensionContext: null,
+    cmsExtensionContextChangedEventListener: null,
+    cmsApi: null,
+    onContextChanged: function(cmsExtensionContext) {
+      this.cmsExtensionContext = Object.assign({}, cmsExtensionContext);
+      if (this.cmsExtensionContextChangedEventListener) {
+        this.cmsExtensionContextChangedEventListener.onCmsExtensionContextChanged(this.cmsExtensionContext);
+      }
+    },
+    onInit: function(cmsApi) {
+      // cmsApi supports refreshChannel() and refreshPage() methods.
+      this.cmsApi = cmsApi;
+    }
+  };
+  </script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+group: hippo-cms
+project:
+    name: dxpfc-thematic-plugin
+    after: [hippo-repository, hippo-cms, hippo-plugin-selections]
+module: dxpfc-thematic-plugin-repository

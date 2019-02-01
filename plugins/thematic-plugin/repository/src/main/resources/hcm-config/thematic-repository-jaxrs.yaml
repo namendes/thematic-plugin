@@ -1,0 +1,6 @@
+definitions:
+  config:
+    /hippo:configuration/hippo:modules/thematic:
+      jcr:primaryType: hipposys:module
+      hipposys:className: com.dxpfc.thematic.jaxrs.ThematicDaemonModule
+      hipposys:cmsonly: true

@@ -1,8 +1,6 @@
-/target
+target/
 /bin
 /logs
 /storage
-*.idea
+/.idea
 *.iml
-*.jar
-*.DS_Store

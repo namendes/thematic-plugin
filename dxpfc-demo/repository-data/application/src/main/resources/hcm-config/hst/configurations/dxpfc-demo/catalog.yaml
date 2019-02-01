@@ -1,6 +1,0 @@
-definitions:
-  config:
-    /hst:hst/hst:configurations/dxpfcdemo/hst:catalog:
-      jcr:primaryType: hst:catalog
-      /dxpfcdemo-catalog:
-        jcr:primaryType: hst:containeritempackage

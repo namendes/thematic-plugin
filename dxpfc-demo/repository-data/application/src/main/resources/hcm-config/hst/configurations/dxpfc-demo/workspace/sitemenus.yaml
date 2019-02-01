@@ -1,4 +1,0 @@
-definitions:
-  config:
-    /hst:hst/hst:configurations/dxpfcdemo/hst:workspace/hst:sitemenus:
-      jcr:primaryType: hst:sitemenus

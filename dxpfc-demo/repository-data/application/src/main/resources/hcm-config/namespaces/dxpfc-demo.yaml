@@ -1,5 +1,0 @@
-definitions:
-  config:
-    /hippo:namespaces/dxpfcdemo:
-      jcr:primaryType: hipposysedit:namespace
-      jcr:mixinTypes: ['mix:referenceable']

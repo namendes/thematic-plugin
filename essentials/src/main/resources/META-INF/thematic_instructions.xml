@@ -13,8 +13,19 @@
     <file action="copy" source="instructions/freemarker/js/thematic.js" target="{{webfilesJsRoot}}/thematic.js"/>
   </instructionSet>
   <instructionSet>
-    <mavenDependency targetPom="cms-dependencies" groupId="com.dxpfc.thematic" artifactId="dxpfc-thematic-plugin" version="2.0.0-SNAPSHOT"/>
-    <mavenDependency targetPom="site-components" groupId="com.dxpfc.thematic" artifactId="dxpfc-thematic-plugin" version="2.0.0-SNAPSHOT"/>
+    <mavenDependency targetPom="root" groupId="com.dxpfc.thematic" artifactId="dxpfc-thematic-plugin" version="2.0.0-SNAPSHOT"/>
+    <mavenDependency targetPom="root" groupId="com.dxpfc.thematic" artifactId="dxpfc-thematic-plugin-jaxrs" version="2.0.0-SNAPSHOT"/>
+    <mavenDependency targetPom="root" groupId="com.dxpfc.thematic" artifactId="dxpfc-thematic-plugin-repository" version="2.0.0-SNAPSHOT"/>
+    <mavenDependency targetPom="root" groupId="com.dxpfc.thematic" artifactId="dxpfc-thematic-plugin-frontend-js" version="2.0.0-SNAPSHOT"/>
+    <mavenDependency targetPom="root" groupId="com.dxpfc.thematic" artifactId="dxpfc-thematic-plugin-site" version="2.0.0-SNAPSHOT"/>
+    <mavenDependency targetPom="cms-dependencies" groupId="com.dxpfc.thematic" artifactId="dxpfc-thematic-plugin"/>
+    <mavenDependency targetPom="cms-dependencies" groupId="com.dxpfc.thematic" artifactId="dxpfc-thematic-plugin-jaxrs"/>
+    <mavenDependency targetPom="cms-dependencies" groupId="com.dxpfc.thematic" artifactId="dxpfc-thematic-plugin-repository"/>
+    <mavenDependency targetPom="cms-dependencies" groupId="com.dxpfc.thematic" artifactId="dxpfc-thematic-plugin-frontend-js"/>
+    <mavenDependency targetPom="cms-dependencies" groupId="com.dxpfc.thematic" artifactId="dxpfc-thematic-plugin-frontend-js"/>
+    <mavenDependency targetPom="site-components" groupId="com.dxpfc.thematic" artifactId="dxpfc-thematic-plugin-site"/>
+
+
     <!--<execute class="org.onehippo.cms7.essentials.plugin.crisp.CrispInstruction"/>-->
   </instructionSet>
   <instructionSet>

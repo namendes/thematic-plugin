@@ -1,6 +1,7 @@
 package com.dxpfc.thematic.jaxrs;
 
 import com.dxpfc.thematic.constants.ThematicConstants;
+import com.dxpfc.thematic.model.ThematicConfigProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -38,8 +39,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
-import javax.xml.ws.Response;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.net.URLDecoder;
@@ -92,31 +93,30 @@ public class ThematicPagesService {
     }
 
     /*
-      GET request with query params as search string
+      POST request with query params as search string
       if empty return nothing along with placeholder preview
      */
-    @GET
+    @POST
     @Path("/search/{theme}/page/{currentUrl}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPagePixelVariables(@Context SecurityContext securityContext,
+    public Response searchThematicPage(@Context SecurityContext securityContext,
                                           @Context HttpServletRequest request, @PathParam("theme") String themeParam,
-                                          @PathParam("currentUrl") String currentURL) {
+                                          @PathParam("currentUrl") String currentURL, ThematicConfigProperties properties) {
 
         ResourceServiceBroker broker = CrispHstServices.getDefaultResourceServiceBroker();
-        Map<String, String> properties = new HashMap<>();
 
         String theme = (themeParam.equalsIgnoreCase("*")) ? "*" : "\"" + themeParam + "\"";
 
         try {
 
-            String thematicPageSitemapPath = properties.get(ThematicConstants.PROPERTIES_THEMATIC_SITEMAP_PATH);
+            String thematicPageSitemapPath = properties.getThematicPageSitemapPath();
             String[] sitemapPathList = thematicPageSitemapPath.split("/");
 
             HstRequestContext requestContext = RequestContextProvider.get();
             Session session = requestContext.getSession();
-            String baseSiteMapUuid = requestContext.getResolvedMount().getMount().getChannel().getSiteMapId();
-            Node baseSitemapNode = session.getNodeByIdentifier(baseSiteMapUuid);
+            /*String thematicSitemapItemPath = requestContext.getResolvedMount().getMount().getChannel().getSiteMapId();
+            Node baseSitemapNode = session.getNodeByIdentifier(thematicSitemapItemPath);
 
             StringBuilder cleanPathBuilder = new StringBuilder();
             for (String sitemapPathItem : sitemapPathList) {
@@ -125,8 +125,8 @@ public class ThematicPagesService {
                     baseSitemapNode = baseSitemapNode.getNode(sitemapPathItem);
                     cleanPathBuilder.append(sitemapPathItem).append("/");
                 }
-            }
-            String cleanPath = cleanPathBuilder.toString();
+            }*/
+            String cleanPath = "";//cleanPathBuilder.toString();
 
             String searchEndpoint = buildSearchEndpoint(properties, theme);
             Resource thematicSearch = broker.resolve(ThematicConstants.CRISP_RESOURCE_THEMATIC_SEARCH, searchEndpoint);
@@ -137,11 +137,11 @@ public class ThematicPagesService {
             for (Resource resultDocument : searchResultsJson.getChildren().getCollection()) {
                 resultDocument.getValue("themeParam");
                 ObjectNode tempNode = mapper.createObjectNode();
-                if (baseSitemapNode.hasNode(resultDocument.getValue("themeParam").toString())) {
+                /*if (baseSitemapNode.hasNode(resultDocument.getValue("themeParam").toString())) {
                     tempNode.put("isCustomized", "Page Customized");
                 } else {
                     tempNode.put("isCustomized", "");
-                }
+                }*/
                 customizationList.add(tempNode);
             }
 
@@ -152,6 +152,8 @@ public class ThematicPagesService {
             request.setAttribute("searchResults", searchResults != null ? searchResults : new Array[]{});
             request.setAttribute("requestURL", currentURL);
             request.setAttribute("error", new Boolean(false));
+
+            return Response.ok(searchResultsJson.toJsonString(mapper)).build();
         } catch (ResourceException | ResourceAccessException | RepositoryException error) {
             request.setAttribute("error", new Boolean(true));
             log.error("Not able to resolve Thematic Search resource :", error);
@@ -446,12 +448,12 @@ public class ThematicPagesService {
         return "deleted".equals(JcrUtils.getStringProperty(node, HST_STATE, (String) null));
     }
 
-    private String buildSearchEndpoint(Map<String, String> properties, String theme) {
-        return properties.get("account_id") +
-                "/pages?_br_in_auth_key=" + properties.get("auth_key") +
+    private String buildSearchEndpoint(ThematicConfigProperties properties, String theme) {
+        return properties.getAccountId() +
+                "/pages?_br_in_auth_key=" + properties.getAuthKey() +
                 "&type=" + "all" +
-                "&rows=" + properties.get("rows") +
-                "&sort_by=" + properties.get("sort_by") +
+                "&rows=" + properties.getRows() +
+                "&sort_by=" + properties.getSortBy() +
                 "&query=" + theme;
     }
 

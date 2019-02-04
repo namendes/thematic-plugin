@@ -3,6 +3,7 @@ package com.dxpfc.thematic.jaxrs;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 
+import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import org.onehippo.repository.jaxrs.CXFRepositoryJaxrsEndpoint;
 import org.onehippo.repository.jaxrs.RepositoryJaxrsService;
 import org.onehippo.repository.modules.DaemonModule;
@@ -17,7 +18,8 @@ public class ThematicDaemonModule implements DaemonModule {
         ThematicPagesService thematicPagesService = new ThematicPagesService();
 
         RepositoryJaxrsService.addEndpoint(new CXFRepositoryJaxrsEndpoint(END_POINT)
-                .singleton(thematicPagesService));
+                .singleton(thematicPagesService)
+                .singleton(new JacksonJsonProvider(ThematicPagesUtils.getThematicObjectMapper())));
     }
 
     @Override

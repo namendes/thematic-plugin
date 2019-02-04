@@ -22,10 +22,52 @@ function redirect() {
 }
 
 window.onload = function () {
-    document.getElementById("default_Sel").focus();
+    //document.getElementById("default_Sel").focus();
 };
 
+function reloadPanel(ui, theme){
+    var oReq = new XMLHttpRequest();
+    oReq.open("POST", "http://localhost:8080/cms/ws/thematic/thematicpages/search/"+theme+"/page/aaa");
+    oReq.setRequestHeader("Content-Type", "application/json");
+    oReq.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
 
+            var thematicPages = JSON.parse(this.responseText);
+            document.getElementById("search_result").innerHTML = "";
+            for (var i = 0; i < thematicPages.length; i++) {
+                var searchResultHTML =
+                    "<li class=\"rippleLink results_item results_item_"+i+"\" onclick=\"loadPreview('${result.getValue(\"theme\")}', '${urlPath}', 'results_item_${count}')\" >" +
+                    "<div class=\"result_theme\">"+thematicPages[i]["h1_default"]+" <br> " +
+                    "<div class=\"customise_tag\"> TODO</div>" +
+                    "</div>" +
+                    "<div class=\"result_details\">Revenue: "+thematicPages[i]["revenue"]+"<br>Visits: "+thematicPages[i]["visits"]+"</div>" +
+                    "</li>";
+
+                document.getElementById("search_result").innerHTML += searchResultHTML;
+            }
+        }
+
+    };
+    oReq.send(ui.extension.config);
+}
+
+UiExtension.register().then((ui) => {
+    document.getElementById("search_form").addEventListener("submit", function (event) {
+        var search_value = document.getElementById("search_value").value;
+        reloadPanel(ui, search_value);
+        event.preventDefault();
+    });
+
+    reloadPanel(ui, "%20");
+});
+
+
+function search(event){
+    UiExtension.register().then((ui) => {
+        reloadPanel(ui, "camera");
+    });
+
+}
 var links = document.querySelectorAll('.rippleLink');
 
 for (var i = 0, len = links.length; i < len; i++) {
@@ -35,8 +77,7 @@ for (var i = 0, len = links.length; i < len; i++) {
 
         if (inkEl) {
             inkEl.classList.remove('animate');
-        }
-        else {
+        } else {
             inkEl = document.createElement('span');
             inkEl.classList.add('ink');
             inkEl.style.width = inkEl.style.height = Math.max(targetEl.offsetWidth, targetEl.offsetHeight) + 'px';

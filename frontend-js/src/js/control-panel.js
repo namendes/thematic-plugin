@@ -2,7 +2,10 @@ var selectedtheme = "";
 
 function loadPreview(url, urlPath, className) {
     UiExtension.register().then((ui) => {
-        var resUrl = url;//.replace(/ /g, "-");
+        console.log("ola", url, urlPath)
+        top.postMessage("reload."+url, "http://localhost:8080/cms");
+
+    var resUrl = url;//.replace(/ /g, "-");
         document.getElementById("previewPanel").setAttribute("src", urlPath + resUrl);
         document.getElementsByClassName("selected")[0].classList.add("results_item");
         document.getElementsByClassName("selected")[0].classList.remove("selected");

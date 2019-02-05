@@ -1,5 +1,5 @@
 <#macro grid_element product>
-<article class="list--item">
+<article class="list--item">aaa
     <figure>
         <img src="${product.getValue("thumb_image")}" alt="">
         <header>

@@ -86,4 +86,17 @@
 </body>
 <link rel="stylesheet" href="${thematicStyle}">
 <script src="${thematicJs}"></script>
+<#if hstRequest.requestContext.cmsRequest>
+<script>
+    top.addEventListener("message", receiveMessage);
+    function receiveMessage(event)
+    {
+        if(event.data.indexOf("reload.") > -1){
+            console.log("reload ", event.data.split(".")[1]);
+            window.location.href = "<@hst.link siteMapItemRefId="thematic"/>/"+event.data.split(".")[1];
+        }
+    }
+</script>
+</#if>
+
 </html>

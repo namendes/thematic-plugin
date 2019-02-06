@@ -56,10 +56,39 @@ function reloadPanel(ui, theme){
     oReq.send(ui.extension.config);
 }
 
+function customize(ui, theme){
+
+    ui.channel.page.get().then((page) => {
+        var oReq = new XMLHttpRequest();
+
+        oReq.open("POST", "/cms/ws/thematic/thematicpages/customize/"+theme+"/page/"+page.siteMapItem.id);
+        oReq.setRequestHeader("Content-Type", "application/json");
+        oReq.withCredentials = true;
+        oReq.setRequestHeader("contextPath", "/site");
+        oReq.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+
+                var thematicPages = JSON.parse(this.responseText);
+
+            }
+
+        };
+        oReq.send(ui.extension.config);
+    });
+}
+
 UiExtension.register().then((ui) => {
     document.getElementById("search_form").addEventListener("submit", function (event) {
         var search_value = document.getElementById("search_value").value;
         reloadPanel(ui, search_value);
+        event.preventDefault();
+    });
+
+    document.getElementById("customize_form").addEventListener("submit", function (event) {
+        ui.channel.page.get().then((page) => {
+            var urlTokens = page.url.split("/");
+            customize(ui, urlTokens[urlTokens.length - 1]);
+        });
         event.preventDefault();
     });
 

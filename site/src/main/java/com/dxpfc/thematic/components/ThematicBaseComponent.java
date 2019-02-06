@@ -74,7 +74,7 @@ public class ThematicBaseComponent extends CommonComponent {
                 super.pageNotFound(response);
         } catch (ResourceException | ResourceAccessException | IOException e) {
             log.error("Unable to resolve Thematic resource - ", e);
-            super.pageNotFound(response);
+            //super.pageNotFound(response);
         }
     }
 

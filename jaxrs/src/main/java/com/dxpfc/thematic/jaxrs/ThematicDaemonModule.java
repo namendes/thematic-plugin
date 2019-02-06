@@ -16,7 +16,6 @@ public class ThematicDaemonModule implements DaemonModule {
     public void initialize(final Session session) throws RepositoryException {
 
         ThematicPagesService thematicPagesService = new ThematicPagesService();
-
         RepositoryJaxrsService.addEndpoint(new CXFRepositoryJaxrsEndpoint(END_POINT)
                 .singleton(thematicPagesService)
                 .singleton(new JacksonJsonProvider(ThematicPagesUtils.getThematicObjectMapper())));

@@ -225,10 +225,13 @@ img {
     border-radius: 2px;
     border: 0 solid;
     box-shadow: 4px 4px 28px -7px rgba(0, 0, 0, 0.68);
+    cursor: pointer;
 }
 
 #customiseDiv {
-    float: right;
+    position:absolute;
+    right: 10px;
+    bottom: 10px;
 }
 
 #formInput {

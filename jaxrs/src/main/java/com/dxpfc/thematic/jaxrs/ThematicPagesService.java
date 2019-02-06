@@ -12,14 +12,22 @@ import org.hippoecm.hst.configuration.internal.CanonicalInfo;
 import org.hippoecm.hst.configuration.sitemap.HstSiteMap;
 import org.hippoecm.hst.configuration.sitemap.HstSiteMapItem;
 import org.hippoecm.hst.container.RequestContextProvider;
+import org.hippoecm.hst.core.internal.HstMutableRequestContext;
 import org.hippoecm.hst.core.request.HstRequestContext;
+import org.hippoecm.hst.pagecomposer.jaxrs.cxf.CXFJaxrsHstConfigService;
 import org.hippoecm.hst.pagecomposer.jaxrs.model.DocumentRepresentation;
 import org.hippoecm.hst.pagecomposer.jaxrs.model.SiteMapItemRepresentation;
+import org.hippoecm.hst.pagecomposer.jaxrs.services.AbstractConfigResource;
 import org.hippoecm.hst.pagecomposer.jaxrs.services.PageComposerContextService;
 import org.hippoecm.hst.pagecomposer.jaxrs.services.exceptions.ClientError;
 import org.hippoecm.hst.pagecomposer.jaxrs.services.exceptions.ClientException;
 import org.hippoecm.hst.pagecomposer.jaxrs.services.helpers.LockHelper;
 import org.hippoecm.hst.pagecomposer.jaxrs.services.helpers.PagesHelper;
+import org.hippoecm.hst.platform.api.PlatformServices;
+import org.hippoecm.hst.platform.api.model.InternalHstModel;
+import org.hippoecm.hst.platform.model.HstModelRegistry;
+import org.hippoecm.hst.site.HstServices;
+import org.hippoecm.hst.site.request.PreviewDecoratorImpl;
 import org.hippoecm.hst.util.HstRequestUtils;
 import org.hippoecm.repository.api.NodeNameCodec;
 import org.hippoecm.repository.util.JcrUtils;
@@ -28,6 +36,8 @@ import org.onehippo.cms7.crisp.api.resource.Resource;
 import org.onehippo.cms7.crisp.api.resource.ResourceException;
 import org.onehippo.cms7.crisp.core.resource.jackson.JacksonResource;
 import org.onehippo.cms7.crisp.hst.module.CrispHstServices;
+import org.onehippo.cms7.services.HippoServiceRegistry;
+import org.onehippo.cms7.services.cmscontext.CmsSessionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.client.ResourceAccessException;
@@ -36,6 +46,7 @@ import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -44,12 +55,13 @@ import javax.ws.rs.core.SecurityContext;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.net.URLDecoder;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import static org.hippoecm.hst.pagecomposer.jaxrs.services.PageComposerContextService.*;
+
 @Path("/thematicpages/")
-public class ThematicPagesService {
+public class ThematicPagesService extends AbstractConfigResource {
 
     private static final Logger log = LoggerFactory.getLogger(ThematicPagesService.class);
 
@@ -60,7 +72,8 @@ public class ThematicPagesService {
     private static final String HST_PAGES = "hst:pages";
     private static final String HST_WORKSPACE_SITEMAP_CONFIGURATION_PATH = "/" + HST_WORKSPACE + "/" + HST_SITEMAP;
     private static final String HST_COMPONENT_CONFIGURATION_ID = "hst:componentconfigurationid";
-    private static final String HST_DEFAULT_PROTOTYPE_PAGE = "/hst:hst/hst:configurations/hst:default/hst:prototypepages";
+    //TODO remove starterstore boot
+    private static final String HST_DEFAULT_PROTOTYPE_PAGE = "/hst:starterstoreboot/hst:configurations/hst:default/hst:prototypepages";
     private static final String HST_PARAMETER_NAMES = "hst:parameternames";
     private static final String HST_PARAMETER_VALUES = "hst:parametervalues";
     private static final String HST_ROLES = "hst:roles";
@@ -78,7 +91,7 @@ public class ThematicPagesService {
         try {
             LockHelper lockHelper = new LockHelper();
             Session session = requestContext.getSession();
-            String hstConfigPath = requestContext.getResolvedMount().getMount().getChannel().getHstConfigPath();
+            String hstConfigPath = "/hst:starterstoreboot/hst:configurations/starterstoreboot-preview";//TODO requestContext.getResolvedMount().getMount().getChannel().getHstConfigPath();
             //unlock the sitemap node and its corresponding hst:component
             lockHelper.unlock(sitemapNode);
             Node createdHstPagesNode = session.getNode(hstConfigPath + "/" + HST_WORKSPACE + "/" + sitemapNode.getProperty(HST_COMPONENT_CONFIGURATION_ID).getString());
@@ -167,20 +180,38 @@ public class ThematicPagesService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response customizePages(@Context SecurityContext securityContext,
-                                   @Context HttpServletRequest request, @PathParam("theme") String theme,
-                                   @PathParam("pageId") String pageId) {
+                                   @Context HttpServletRequest request, @Context HttpServletResponse response,
+                                   @PathParam("theme") String theme,
+                                   @PathParam("pageId") String pageId, ThematicConfigProperties properties) {
         Session session;
         try {
             HstRequestContext requestContext = RequestContextProvider.get();
-            session = requestContext.getSession();
-            String baseSiteMapUuid = requestContext.getResolvedMount().getMount().getChannel().getSiteMapId();
-            Node sitemapNode = session.getNodeByIdentifier(baseSiteMapUuid);
-            Mount editingMount = getEditingMount(requestContext);
+            //Augment session
+            session = requestContext.getSession().impersonate(CmsSessionContext.getContext(request.getSession()).getRepositoryCredentials());
+            ((HstMutableRequestContext) requestContext).setSession(session);
+            //need go inject the PREVIEW_EDITING_HST_MODEL_ATTR in the requestContext
+            simulateCXFJaxrsHstConfigService(requestContext);
+            //using platform services to retrieve the mapped HST
+            PlatformServices platformService = HippoServiceRegistry.getService(PlatformServices.class);
+            String hostGroupName = requestContext.getResolvedMount().getMount().getVirtualHost().getHostGroupName();
+            String mountName = requestContext.getResolvedMount().getMount().getName();
+            Mount editingMount = null;
+            for(Mount mount : platformService.getMountService().getPreviewMounts(hostGroupName).values()){
+                if(mount.getName().equals(mountName) && mount.isMapped()){
+                    editingMount = mount;
+                }
+            }
+
+            if(editingMount == null){
+                log.error("Couldn't find the editing mount under {} with name {} ", hostGroupName, mountName);
+                return error("Couldn't find the editing mount");
+            }
+
+            Node sitemapNode = session.getNodeByIdentifier(pageId).getParent().getParent();
             Node prototypeNode = session.getNode(HST_DEFAULT_PROTOTYPE_PAGE + "/" + THEMATIC_BASE_PAGE);
 
 
-            Map<String, String> properties = new HashMap<>();
-            String thematicPageSitemapPath = properties.get(ThematicConstants.PROPERTIES_THEMATIC_SITEMAP_PATH);
+            String thematicPageSitemapPath = properties.getThematicPageSitemapPath();
             String[] sitemapPathList = thematicPageSitemapPath.split("/");
 
             StringBuilder cleanPathBuilder = new StringBuilder();
@@ -202,7 +233,7 @@ public class ThematicPagesService {
                 SiteMapItemRepresentation siteMapItem = new SiteMapItemRepresentation();
                 siteMapItem.setName(theme);
                 siteMapItem.setComponentConfigurationId(prototypeNode.getIdentifier());
-                String previewThemeSitemapPath = editingMount.getHstSite().getConfigurationPath() + HST_WORKSPACE_SITEMAP_CONFIGURATION_PATH + cleanPath;
+                String previewThemeSitemapPath = sitemapNode.getPath();
                 DocumentRepresentation document = new DocumentRepresentation(previewThemeSitemapPath + theme, theme, true, true);
                 siteMapItem.setPrimaryDocumentRepresentation(document);
 
@@ -224,7 +255,8 @@ public class ThematicPagesService {
 
     private Node createSitemapNode(SiteMapItemRepresentation siteMapItem, String finalParentId, HstRequestContext requestContext, Mount editingMount) throws RepositoryException {
         PagesHelper pagesHelper = new PagesHelper();
-        pagesHelper.setPageComposerContextService(new PageComposerContextService());
+        PageComposerContextService pageComposerContextService = HstServices.getComponentManager().getComponent("pageComposerContextService", "org.hippoecm.hst.pagecomposer");
+        pagesHelper.setPageComposerContextService(pageComposerContextService);
         LockHelper lockHelper = new LockHelper();
         Session session = requestContext.getSession();
         Node parent = session.getNodeByIdentifier(finalParentId);
@@ -455,6 +487,29 @@ public class ThematicPagesService {
                 "&rows=" + properties.getRows() +
                 "&sort_by=" + properties.getSortBy() +
                 "&query=" + theme;
+    }
+
+    private InternalHstModel simulateCXFJaxrsHstConfigService(HstRequestContext requestContext){
+
+        final String contextPath = requestContext.getServletRequest().getHeader("contextPath");
+        if (contextPath == null) {
+            throw new IllegalArgumentException("'contextPath' header is missing");
+        }
+
+        final HstModelRegistry hstModelRegistry = HippoServiceRegistry.getService(HstModelRegistry.class);
+        final InternalHstModel liveHstModel = (InternalHstModel)hstModelRegistry.getHstModel(contextPath);
+        if (liveHstModel == null) {
+            throw new IllegalArgumentException(String.format("Cannot find an hst model for context path '%s'", contextPath));
+        }
+        requestContext.setAttribute(EDITING_HST_MODEL_LINK_CREATOR_ATTR, liveHstModel.getHstLinkCreator());
+
+        final InternalHstModel liveHstModelSnapshot = new CXFJaxrsHstConfigService.HstModelSnapshot(liveHstModel);
+        final InternalHstModel previewHstModelSnapshot = new CXFJaxrsHstConfigService.HstModelSnapshot(liveHstModelSnapshot, new PreviewDecoratorImpl());
+
+        requestContext.setAttribute(LIVE_EDITING_HST_MODEL_ATTR, liveHstModelSnapshot);
+        requestContext.setAttribute(PREVIEW_EDITING_HST_MODEL_ATTR, previewHstModelSnapshot);
+
+        return previewHstModelSnapshot;
     }
 
 }

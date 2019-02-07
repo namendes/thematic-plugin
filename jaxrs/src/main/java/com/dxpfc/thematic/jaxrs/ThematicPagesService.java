@@ -72,8 +72,7 @@ public class ThematicPagesService extends AbstractConfigResource {
     private static final String HST_PAGES = "hst:pages";
     private static final String HST_WORKSPACE_SITEMAP_CONFIGURATION_PATH = "/" + HST_WORKSPACE + "/" + HST_SITEMAP;
     private static final String HST_COMPONENT_CONFIGURATION_ID = "hst:componentconfigurationid";
-    //TODO remove starterstore boot
-    private static final String HST_DEFAULT_PROTOTYPE_PAGE = "/hst:starterstoreboot/hst:configurations/hst:default/hst:prototypepages";
+    private static final String HST_DEFAULT_PROTOTYPE_PAGE = "/hst:configurations/hst:default/hst:prototypepages";
     private static final String HST_PARAMETER_NAMES = "hst:parameternames";
     private static final String HST_PARAMETER_VALUES = "hst:parametervalues";
     private static final String HST_ROLES = "hst:roles";
@@ -87,11 +86,10 @@ public class ThematicPagesService extends AbstractConfigResource {
     private static final String THEMATIC_BASE_PAGE = "thematicBasePage";
 
 
-    private static void unlockAndReLockLandingPages(Node sitemapNode, HstRequestContext requestContext) {
+    private static void unlockAndReLockLandingPages(Node sitemapNode, HstRequestContext requestContext, String hstConfigPath) {
         try {
             LockHelper lockHelper = new LockHelper();
             Session session = requestContext.getSession();
-            String hstConfigPath = "/hst:starterstoreboot/hst:configurations/starterstoreboot-preview";//TODO requestContext.getResolvedMount().getMount().getChannel().getHstConfigPath();
             //unlock the sitemap node and its corresponding hst:component
             lockHelper.unlock(sitemapNode);
             Node createdHstPagesNode = session.getNode(hstConfigPath + "/" + HST_WORKSPACE + "/" + sitemapNode.getProperty(HST_COMPONENT_CONFIGURATION_ID).getString());
@@ -127,8 +125,12 @@ public class ThematicPagesService extends AbstractConfigResource {
             String[] sitemapPathList = thematicPageSitemapPath.split("/");
 
             HstRequestContext requestContext = RequestContextProvider.get();
-            Session session = requestContext.getSession();
-            /*String thematicSitemapItemPath = requestContext.getResolvedMount().getMount().getChannel().getSiteMapId();
+            //Augment session
+            Session session = requestContext.getSession().impersonate(CmsSessionContext.getContext(request.getSession()).getRepositoryCredentials());
+            ((HstMutableRequestContext) requestContext).setSession(session);
+            //fetching the editing mount "mapped" to the resolved cms mount
+            Mount editingMount = getEditingMount(requestContext);
+            String thematicSitemapItemPath = editingMount.getChannel().getSiteMapId();
             Node baseSitemapNode = session.getNodeByIdentifier(thematicSitemapItemPath);
 
             StringBuilder cleanPathBuilder = new StringBuilder();
@@ -138,8 +140,8 @@ public class ThematicPagesService extends AbstractConfigResource {
                     baseSitemapNode = baseSitemapNode.getNode(sitemapPathItem);
                     cleanPathBuilder.append(sitemapPathItem).append("/");
                 }
-            }*/
-            String cleanPath = "";//cleanPathBuilder.toString();
+            }
+            String cleanPath = cleanPathBuilder.toString();
 
             String searchEndpoint = buildSearchEndpoint(properties, theme);
             Resource thematicSearch = broker.resolve(ThematicConstants.CRISP_RESOURCE_THEMATIC_SEARCH, searchEndpoint);
@@ -148,17 +150,16 @@ public class ThematicPagesService extends AbstractConfigResource {
             ObjectMapper mapper = new ObjectMapper();
             ArrayNode customizationList = mapper.createArrayNode();
             for (Resource resultDocument : searchResultsJson.getChildren().getCollection()) {
-                resultDocument.getValue("themeParam");
                 ObjectNode tempNode = mapper.createObjectNode();
-                /*if (baseSitemapNode.hasNode(resultDocument.getValue("themeParam").toString())) {
+                if (baseSitemapNode.hasNode(resultDocument.getValue("theme").toString())) {
                     tempNode.put("isCustomized", "Page Customized");
                 } else {
                     tempNode.put("isCustomized", "");
-                }*/
+                }
                 customizationList.add(tempNode);
             }
 
-            JacksonResource customizationResource = new JacksonResource(customizationList);
+            JacksonResource customizationResource = new JacksonResource(searchResultsJson, customizationList, "customizationList");
             request.setAttribute("customizationList", customizationResource);
             request.setAttribute("numResults", thematicSearch.getValue("numFound"));
             request.setAttribute("urlPath", cleanPath);
@@ -171,7 +172,7 @@ public class ThematicPagesService extends AbstractConfigResource {
             request.setAttribute("error", new Boolean(true));
             log.error("Not able to resolve Thematic Search resource :", error);
         }
-        return null;
+        return error("Something went wrong while searching thematic pages");
     }
 
 
@@ -192,24 +193,13 @@ public class ThematicPagesService extends AbstractConfigResource {
             //need go inject the PREVIEW_EDITING_HST_MODEL_ATTR in the requestContext
             simulateCXFJaxrsHstConfigService(requestContext);
             //using platform services to retrieve the mapped HST
-            PlatformServices platformService = HippoServiceRegistry.getService(PlatformServices.class);
-            String hostGroupName = requestContext.getResolvedMount().getMount().getVirtualHost().getHostGroupName();
-            String mountName = requestContext.getResolvedMount().getMount().getName();
-            Mount editingMount = null;
-            for(Mount mount : platformService.getMountService().getPreviewMounts(hostGroupName).values()){
-                if(mount.getName().equals(mountName) && mount.isMapped()){
-                    editingMount = mount;
-                }
-            }
-
+            Mount editingMount = getEditingMount(requestContext);
             if(editingMount == null){
-                log.error("Couldn't find the editing mount under {} with name {} ", hostGroupName, mountName);
                 return error("Couldn't find the editing mount");
             }
-
-            Node sitemapNode = session.getNodeByIdentifier(pageId).getParent().getParent();
-            Node prototypeNode = session.getNode(HST_DEFAULT_PROTOTYPE_PAGE + "/" + THEMATIC_BASE_PAGE);
-
+            Node sitemapNode = session.getNode(editingMount.getChannel().getHstConfigPath()+"/hst:workspace/hst:sitemap");
+            String hstSiteName = "/hst:"+editingMount.getHstSite().getName();
+            Node prototypeNode = session.getNode(hstSiteName + HST_DEFAULT_PROTOTYPE_PAGE + "/" + THEMATIC_BASE_PAGE);
 
             String thematicPageSitemapPath = properties.getThematicPageSitemapPath();
             String[] sitemapPathList = thematicPageSitemapPath.split("/");
@@ -238,18 +228,18 @@ public class ThematicPagesService extends AbstractConfigResource {
                 siteMapItem.setPrimaryDocumentRepresentation(document);
 
                 final Node createdSitemapNode = createSitemapNode(siteMapItem, sitemapNode.getIdentifier(), requestContext, editingMount);
-                unlockAndReLockLandingPages(createdSitemapNode, requestContext);
+                unlockAndReLockLandingPages(createdSitemapNode, requestContext, editingMount.getChannel().getHstConfigPath());
 
                 String redirect = requestContext.getHstLinkCreator().create(cleanPath + theme, requestContext.getResolvedMount().getMount()).toUrlForm(requestContext, true);
                 //response.sendRedirect(redirect);
             }
-
+            return Response.ok().build();
 
         } catch (RepositoryException error) {
             log.error("Failed to create new sitemap item for customization", error);
         }
 
-        return null;
+        return Response.notModified().build();
     }
 
 
@@ -295,23 +285,16 @@ public class ThematicPagesService extends AbstractConfigResource {
         return siteMapPathPrefixBuilder.toString();
     }
 
-    private Mount getEditingMount(HstRequestContext requestContext) throws RepositoryException {
-        String renderingMountId = (String) requestContext.getServletRequest().getSession(true).getAttribute(HST_RENDER_MOUNT_CLASSPATH);
-        if (renderingMountId == null) {
-            throw new IllegalStateException("Could not find rendering mount id on request session.");
-        }
-        Mount editingMount = requestContext.getVirtualHost().getVirtualHosts().getMountByIdentifier(renderingMountId);
-        String msg;
-        if (editingMount == null) {
-            msg = String.format("Could not find a Mount for identifier + '%s'", renderingMountId);
-            throw new IllegalStateException(msg);
-        } else if (!PREVIEW_MOUNT.equals(editingMount.getType())) {
-            msg = String.format("Expected a preview (decorated) mount but '%s' is not of type preview.", editingMount.toString());
-            throw new IllegalStateException(msg);
-        }
-        String previewWorkspaceSiteMapPath = editingMount.getHstSite().getConfigurationPath() + HST_WORKSPACE_SITEMAP_CONFIGURATION_PATH;
-        if (!requestContext.getSession().nodeExists(previewWorkspaceSiteMapPath)) {
-            createWorkspaceSiteMapInPreviewAndLive(previewWorkspaceSiteMapPath, requestContext.getSession());
+    private Mount getEditingMount(HstRequestContext requestContext) {
+        Mount editingMount = null;
+        PlatformServices platformService = HippoServiceRegistry.getService(PlatformServices.class);
+        String hostGroupName = requestContext.getResolvedMount().getMount().getVirtualHost().getHostGroupName();
+        String mountName = requestContext.getResolvedMount().getMount().getName();
+        log.debug("Searching the editing mount under {} with name {} ", hostGroupName, mountName);
+        for(Mount mount : platformService.getMountService().getPreviewMounts(hostGroupName).values()){
+            if(mount.getName().equals(mountName) && mount.isMapped()){
+                editingMount = mount;
+            }
         }
         return editingMount;
     }

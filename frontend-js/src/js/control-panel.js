@@ -2,8 +2,7 @@ var selectedtheme = "";
 
 function loadPreview(url, urlPath, className) {
     UiExtension.register().then((ui) => {
-        console.log("ola", url, urlPath)
-        top.postMessage("reload."+url, "http://localhost:8080/cms");
+        top.postMessage("reload."+url, "*");
 
     var resUrl = url;//.replace(/ /g, "-");
         document.getElementById("previewPanel").setAttribute("src", urlPath + resUrl);
@@ -15,25 +14,15 @@ function loadPreview(url, urlPath, className) {
     });
 }
 
-function redirect() {
-    document.getElementById("formInput").setAttribute("value", selectedtheme);
-    var injector = parent['angular'].element(parent.document.body).injector();
-    if (injector) {
-        injector.get('$rootScope').$apply(function () {
-            var channelService = injector.get('ChannelService');
-            channelService.reload();
-        });
-    }
-}
-
 window.onload = function () {
     //document.getElementById("default_Sel").focus();
 };
 
 function reloadPanel(ui, theme){
     var oReq = new XMLHttpRequest();
-    oReq.open("POST", "http://localhost:8080/cms/ws/thematic/thematicpages/search/"+theme+"/page/aaa");
+    oReq.open("POST", "/cms/ws/thematic/thematicpages/search/"+theme+"/page/aaa");
     oReq.setRequestHeader("Content-Type", "application/json");
+    oReq.withCredentials = true;
     oReq.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
 
@@ -67,9 +56,7 @@ function customize(ui, theme){
         oReq.setRequestHeader("contextPath", "/site");
         oReq.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-
-                var thematicPages = JSON.parse(this.responseText);
-
+                ui.channel.refresh();
             }
 
         };

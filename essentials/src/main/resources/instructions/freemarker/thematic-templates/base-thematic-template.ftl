@@ -58,8 +58,7 @@
                     <@grid.grid_element product=newsDoc/>
                 </#list>
             <#else>
-                <h1>Failed to Fetch Thematic Page</h1>
-                <h3>Check whether this Thematic Page exists or not</h3>
+                <h1>Thematic Page</h1>
             </#if>
         </div>
         <div class="pagination">

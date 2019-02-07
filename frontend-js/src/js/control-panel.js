@@ -1,16 +1,8 @@
 var selectedtheme = "";
 
-function loadPreview(url, urlPath, className) {
+function loadPreview(url) {
     UiExtension.register().then((ui) => {
-        top.postMessage("reload."+url, "*");
-
-    var resUrl = url;//.replace(/ /g, "-");
-        document.getElementById("previewPanel").setAttribute("src", urlPath + resUrl);
-        document.getElementsByClassName("selected")[0].classList.add("results_item");
-        document.getElementsByClassName("selected")[0].classList.remove("selected");
-        document.getElementsByClassName(className)[0].classList.remove("results_item");
-        document.getElementsByClassName(className)[0].classList.add("selected");
-        selectedtheme = url;
+        top.postMessage("reload." + url, "*");
     });
 }
 
@@ -30,9 +22,9 @@ function reloadPanel(ui, theme){
             document.getElementById("search_result").innerHTML = "";
             for (var i = 0; i < thematicPages.length; i++) {
                 var searchResultHTML =
-                    "<li class=\"rippleLink results_item results_item_"+i+"\" onclick=\"loadPreview('"+thematicPages[i]["theme"]+"', '${urlPath}', 'results_item_${count}')\" >" +
+                    "<li class=\"rippleLink results_item results_item_"+i+"\" onclick=\"loadPreview('"+thematicPages[i]["theme"]+"')\" >" +
                     "<div class=\"result_theme\">"+thematicPages[i]["h1_default"]+" <br> " +
-                    "<div class=\"customise_tag\"> TODO</div>" +
+                    "<div class=\"customise_tag\"> <!--TODO--></div>" +
                     "</div>" +
                     "<div class=\"result_details\">Revenue: "+thematicPages[i]["revenue"]+"<br>Visits: "+thematicPages[i]["visits"]+"</div>" +
                     "</li>";

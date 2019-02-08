@@ -2,9 +2,10 @@ definitions:
   config:
     /hippo:configuration/hippo:frontend/cms/ui-extensions/thematicAddon:
       jcr:primaryType: frontend:uiExtension
-      frontend:config: "{  \r\n   \"thematicPageSitemapPath\":\"thematic/\",\r\n   \"\
-        account_id\":\"neimanmarcus\",\r\n   \"rows\":\"100\",\r\n   \"auth_key\":\"n4roHFXGN1Kekt6E2mWSimhayReg5\"\
-        ,\r\n   \"sort_by\":\"revenue\"\r\n}"
-      frontend:displayName: Thematic Pages Addon
+      frontend:config: "{  \r\n  \"thematicPanelConfig\": {  \r\n    \"thematicPageSitemapPath\"\
+        :\"thematic/\",\r\n    \"account_id\":\"\",\r\n    \"rows\":\"100\"\
+        ,\r\n    \"auth_key\":\"\",\r\n    \"sort_by\":\"\
+        revenue\"\r\n  }\r\n}"
+      frontend:displayName: Thematic Pages
       frontend:extensionPoint: channel.page.tools
       frontend:url: angular/thematicAddon/index.html

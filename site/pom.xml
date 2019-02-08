@@ -33,10 +33,6 @@
             <artifactId>hippo-addon-crisp-hst</artifactId>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.onehippo.cms7</groupId>
-            <artifactId>hippo-essentials-components-hst</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>com.dxpfc.thematic</groupId>

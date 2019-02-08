@@ -190,10 +190,10 @@ public class ThematicPagesService extends AbstractConfigResource {
             //Augment session
             session = requestContext.getSession().impersonate(CmsSessionContext.getContext(request.getSession()).getRepositoryCredentials());
             ((HstMutableRequestContext) requestContext).setSession(session);
-            //need go inject the PREVIEW_EDITING_HST_MODEL_ATTR in the requestContext
-            simulateCXFJaxrsHstConfigService(requestContext);
             //using platform services to retrieve the mapped HST
             Mount editingMount = getEditingMount(requestContext);
+            //need go inject the PREVIEW_EDITING_HST_MODEL_ATTR in the requestContext
+            simulateCXFJaxrsHstConfigService(requestContext, editingMount);
             if(editingMount == null){
                 return error("Couldn't find the editing mount");
             }
@@ -472,9 +472,9 @@ public class ThematicPagesService extends AbstractConfigResource {
                 "&query=" + theme;
     }
 
-    private InternalHstModel simulateCXFJaxrsHstConfigService(HstRequestContext requestContext){
+    private InternalHstModel simulateCXFJaxrsHstConfigService(HstRequestContext requestContext, Mount editingMount){
 
-        final String contextPath = requestContext.getServletRequest().getHeader("contextPath");
+        final String contextPath = editingMount.getContextPath();
         if (contextPath == null) {
             throw new IllegalArgumentException("'contextPath' header is missing");
         }

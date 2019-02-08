@@ -1,18 +1,12 @@
-var selectedtheme = "";
-
 function loadPreview(url) {
     UiExtension.register().then((ui) => {
         top.postMessage("reload." + url, "*");
     });
 }
 
-window.onload = function () {
-    //document.getElementById("default_Sel").focus();
-};
-
 function reloadPanel(ui, theme){
     var oReq = new XMLHttpRequest();
-    oReq.open("POST", "/cms/ws/thematic/thematicpages/search/"+theme+"/page/aaa");
+    oReq.open("POST", ui.baseUrl+"ws/thematic/thematicpages/search/"+theme+"/page/aaa");
     oReq.setRequestHeader("Content-Type", "application/json");
     oReq.withCredentials = true;
     oReq.onreadystatechange = function() {
@@ -32,9 +26,9 @@ function reloadPanel(ui, theme){
                 document.getElementById("search_result").innerHTML += searchResultHTML;
             }
         }
-
     };
-    oReq.send(ui.extension.config);
+    var uiExtensionConfig = JSON.parse(ui.extension.config);
+    oReq.send(JSON.stringify(uiExtensionConfig["thematicPanelConfig"]));
 }
 
 function customize(ui, theme){
@@ -42,7 +36,7 @@ function customize(ui, theme){
     ui.channel.page.get().then((page) => {
         var oReq = new XMLHttpRequest();
 
-        oReq.open("POST", "/cms/ws/thematic/thematicpages/customize/"+theme+"/page/"+page.siteMapItem.id);
+        oReq.open("POST", ui.baseUrl+"ws/thematic/thematicpages/customize/"+theme+"/page/"+page.siteMapItem.id);
         oReq.setRequestHeader("Content-Type", "application/json");
         oReq.withCredentials = true;
         oReq.setRequestHeader("contextPath", "/site");
@@ -52,7 +46,8 @@ function customize(ui, theme){
             }
 
         };
-        oReq.send(ui.extension.config);
+        var uiExtensionConfig = JSON.parse(ui.extension.config);
+        oReq.send(JSON.stringify(uiExtensionConfig["thematicPanelConfig"]));
     });
 }
 
@@ -74,13 +69,6 @@ UiExtension.register().then((ui) => {
     reloadPanel(ui, "%20");
 });
 
-
-function search(event){
-    UiExtension.register().then((ui) => {
-        reloadPanel(ui, "camera");
-    });
-
-}
 var links = document.querySelectorAll('.rippleLink');
 
 for (var i = 0, len = links.length; i < len; i++) {
@@ -103,63 +91,3 @@ for (var i = 0, len = links.length; i < len; i++) {
     }, false);
 }
 
-
-function ready(id) {
-    document.getElementById(id).style.display = "block";
-}
-
-
-function load() {
-    adjustSize();
-
-    var iframeDocument = document.getElementById("previewPanel").contentDocument;
-    var overlay = iframeDocument.createElement('div');
-    overlay.style.position = 'fixed';
-    overlay.style.width = '100%';
-    overlay.style.height = '100%';
-    overlay.style.zIndex = '100000';
-    overlay.style.top = 0;
-    overlay.style.left = 0;
-
-    iframeDocument.body.appendChild(overlay);
-}
-
-function adjustSize() {
-    var iframe = document.getElementById("previewPanel");
-
-    if (iframe) {
-        iframe.style.width = `${document.body.clientWidth}px`;
-    }
-}
-
-window.addEventListener('resize', adjustSize);
-
-/*
-
-var current_frame = 0;
-var total_frames = 60;
-var paths = document.getElementsByTagName('path');
-var length = [];
-
-for(var i=0; i< paths.length ;i++){
-    var l = paths[i].getTotalLength() + 200;
-    length[i] = l;
-    paths[i].style.strokeDasharray = l + ' ' + l;
-    paths[i].style.strokeDashoffset = l;
-}
-var handle = 0;
-
-var draw = function() {
-    var progress = current_frame/total_frames;
-    if (progress > 1) {
-        window.cancelAnimationFrame(handle);
-    } else {
-        current_frame++;
-        for(var j=0; j<paths.length;j++){
-            paths[j].style.strokeDashoffset = Math.floor(length[j] * (1 - progress));
-        }
-        handle = window.requestAnimationFrame(draw);
-    }
-    if (current_frame == 61){ current_frame = 0};
-};
-draw();*/

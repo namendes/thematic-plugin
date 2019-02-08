@@ -10,8 +10,8 @@
 
     <parent>
         <groupId>com.onehippo.cms7</groupId>
-        <artifactId>hippo-cms7-enterprise-release</artifactId>
-        <version>13.0.1-SNAPSHOT</version>
+        <artifactId>hippo-cms7-enterprise-project</artifactId>
+        <version>30.0</version>
     </parent>
 
     <name>Thematic Pages Addon</name>
@@ -21,9 +21,11 @@
     <version>2.0.0-SNAPSHOT</version>
 
     <properties>
-        <pageComposer.version>13.0.1-SNAPSHOT</pageComposer.version>
         <commons-lang.version>2.6</commons-lang.version>
         <commons-proxy.version>1.0</commons-proxy.version>
+        <hippo.hst.version>13.0.0</hippo.hst.version>
+        <hippo.addon-crisp.version>13.0.0</hippo.addon-crisp.version>
+        <hippo.repository.version>13.0.0</hippo.repository.version>
     </properties>
 
     <repositories>
@@ -52,9 +54,16 @@
             </dependency>
 
             <dependency>
+                <groupId>org.onehippo.cms7</groupId>
+                <artifactId>hippo-services</artifactId>
+                <version>${hippo.hst.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
                 <groupId>org.onehippo.cms7.hst.client-modules</groupId>
                 <artifactId>hst-page-composer</artifactId>
-                <version>${pageComposer.version}</version>
+                <version>${hippo.hst.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.onehippo.cms7</groupId>

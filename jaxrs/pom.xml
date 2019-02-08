@@ -20,16 +20,16 @@
             <artifactId>dxpfc-thematic-plugin-common</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.onehippo.cms7</groupId>
+            <artifactId>hippo-services</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
 
         <dependency>
             <groupId>org.onehippo.cms7.hst</groupId>
             <artifactId>hst-platform-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.onehippo.cms7</groupId>
-            <artifactId>hippo-repository-config</artifactId>
             <scope>provided</scope>
         </dependency>
 

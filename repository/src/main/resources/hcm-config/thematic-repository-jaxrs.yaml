@@ -4,3 +4,5 @@ definitions:
       jcr:primaryType: hipposys:module
       hipposys:className: com.dxpfc.thematic.jaxrs.ThematicDaemonModule
       hipposys:cmsonly: true
+      /hippo:moduleconfig:
+        jcr:primaryType: nt:unstructured

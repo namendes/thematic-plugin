@@ -26,6 +26,9 @@ function reloadPanel(ui, theme){
                 document.getElementById("search_result").innerHTML += searchResultHTML;
             }
         }
+        else{
+            document.getElementById("search_result").innerHTML = "Something went wrong. Check if the backend is down or your credentials are correct";
+        }
     };
     var uiExtensionConfig = JSON.parse(ui.extension.config);
     oReq.send(JSON.stringify(uiExtensionConfig["thematicPanelConfig"]));

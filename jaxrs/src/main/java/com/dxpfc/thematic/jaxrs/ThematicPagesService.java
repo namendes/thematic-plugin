@@ -112,8 +112,8 @@ public class ThematicPagesService extends AbstractConfigResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response searchThematicPage(@Context SecurityContext securityContext,
-                                          @Context HttpServletRequest request, @PathParam("theme") String themeParam,
-                                          @PathParam("currentUrl") String currentURL, ThematicConfigProperties properties) {
+                                       @Context HttpServletRequest request, @PathParam("theme") String themeParam,
+                                       @PathParam("currentUrl") String currentURL, ThematicConfigProperties properties) {
 
         ResourceServiceBroker broker = CrispHstServices.getDefaultResourceServiceBroker();
 
@@ -194,11 +194,11 @@ public class ThematicPagesService extends AbstractConfigResource {
             Mount editingMount = getEditingMount(requestContext);
             //need go inject the PREVIEW_EDITING_HST_MODEL_ATTR in the requestContext
             simulateCXFJaxrsHstConfigService(requestContext, editingMount);
-            if(editingMount == null){
+            if (editingMount == null) {
                 return error("Couldn't find the editing mount");
             }
-            Node sitemapNode = session.getNode(editingMount.getChannel().getHstConfigPath()+"/hst:workspace/hst:sitemap");
-            String hstSiteName = "/hst:"+editingMount.getHstSite().getName();
+            Node sitemapNode = session.getNode(editingMount.getChannel().getHstConfigPath() + "/hst:workspace/hst:sitemap");
+            String hstSiteName = "/hst:" + editingMount.getHstSite().getName();
             Node prototypeNode = session.getNode(hstSiteName + HST_DEFAULT_PROTOTYPE_PAGE + "/" + THEMATIC_BASE_PAGE);
 
             String thematicPageSitemapPath = properties.getThematicPageSitemapPath();
@@ -291,8 +291,8 @@ public class ThematicPagesService extends AbstractConfigResource {
         String hostGroupName = requestContext.getResolvedMount().getMount().getVirtualHost().getHostGroupName();
         String mountName = requestContext.getResolvedMount().getMount().getName();
         log.debug("Searching the editing mount under {} with name {} ", hostGroupName, mountName);
-        for(Mount mount : platformService.getMountService().getPreviewMounts(hostGroupName).values()){
-            if(mount.getName().equals(mountName) && mount.isMapped()){
+        for (Mount mount : platformService.getMountService().getPreviewMounts(hostGroupName).values()) {
+            if (mount.getName().equals(mountName) && mount.isMapped()) {
                 editingMount = mount;
             }
         }
@@ -472,7 +472,7 @@ public class ThematicPagesService extends AbstractConfigResource {
                 "&query=" + theme;
     }
 
-    private InternalHstModel simulateCXFJaxrsHstConfigService(HstRequestContext requestContext, Mount editingMount){
+    private InternalHstModel simulateCXFJaxrsHstConfigService(HstRequestContext requestContext, Mount editingMount) {
 
         final String contextPath = editingMount.getContextPath();
         if (contextPath == null) {
@@ -480,7 +480,7 @@ public class ThematicPagesService extends AbstractConfigResource {
         }
 
         final HstModelRegistry hstModelRegistry = HippoServiceRegistry.getService(HstModelRegistry.class);
-        final InternalHstModel liveHstModel = (InternalHstModel)hstModelRegistry.getHstModel(contextPath);
+        final InternalHstModel liveHstModel = (InternalHstModel) hstModelRegistry.getHstModel(contextPath);
         if (liveHstModel == null) {
             throw new IllegalArgumentException(String.format("Cannot find an hst model for context path '%s'", contextPath));
         }

@@ -10,15 +10,15 @@
 
     <parent>
         <groupId>com.onehippo.cms7</groupId>
-        <artifactId>hippo-cms7-enterprise-project</artifactId>
-        <version>30.0</version>
+        <artifactId>hippo-cms7-enterprise-release</artifactId>
+        <version>13.0.0</version>
     </parent>
 
     <name>Thematic Pages Addon</name>
     <description>Thematic Pages Addon</description>
     <groupId>com.dxpfc.thematic</groupId>
     <artifactId>dxpfc-thematic-plugin</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
+    <version>2.0.1-SNAPSHOT</version>
 
     <properties>
         <commons-lang.version>2.6</commons-lang.version>
@@ -27,6 +27,8 @@
         <hippo.addon-crisp.version>13.0.0</hippo.addon-crisp.version>
         <hippo.repository.version>13.0.0</hippo.repository.version>
     </properties>
+
+
 
     <repositories>
         <repository>

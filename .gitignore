@@ -2,5 +2,6 @@ target/
 /bin
 /logs
 /storage
-/.idea
+**/.idea
 *.iml
+**/node_modules

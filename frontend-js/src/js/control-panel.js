@@ -80,7 +80,7 @@ UiExtension.register().then((ui) => {
     document.getElementById("customize_form").addEventListener("submit", function (event) {
         ui.channel.page.get().then((page) => {
             var urlTokens = page.url.split("/");
-            customize(ui, urlTokens[urlTokens.length - 1]);
+            customize(ui, urlTokens[urlTokens.length - 1].replace(/\s+/g, '-'));
         });
         event.preventDefault();
     });

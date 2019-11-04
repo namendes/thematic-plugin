@@ -1,9 +1,9 @@
-const thematicCookie = 'thematic-plugin-url';
+const thematicCookie = 'thematic';
 
 function loadPreview(url) {
     UiExtension.register().then((ui) => {
-        top.postMessage("reload." + url, "*");
-        setCookie(thematicCookie,url,10);
+        //top.postMessage("reload." + url, "*");
+        setCookie(thematicCookie,url, 200000);
         ui.channel.page.refresh();
     });
 }
@@ -71,11 +71,11 @@ function customize(ui, theme){
 }
 
 UiExtension.register().then((ui) => {
-    document.getElementById("search_form").addEventListener("submit", function (event) {
-        var search_value = document.getElementById("search_value").value;
-        reloadPanel(ui, search_value);
-        event.preventDefault();
-    });
+    // document.getElementById("search_form").addEventListener("submit", function (event) {
+    //     var search_value = document.getElementById("search_value").value;
+    //     reloadPanel(ui, search_value);
+    //     event.preventDefault();
+    // });
 
     document.getElementById("customize_form").addEventListener("submit", function (event) {
         ui.channel.page.get().then((page) => {
@@ -84,13 +84,13 @@ UiExtension.register().then((ui) => {
         });
         event.preventDefault();
     });
-
-    var currentUrl = getCookie(thematicCookie);
-    if(currentUrl !== "" && currentUrl !== null){
-        reloadPanel(ui, currentUrl);
-    }else{
-        reloadPanel(ui, "%20");
-    }
+    //
+    // var currentUrl = getCookie(thematicCookie);
+    // if(currentUrl !== "" && currentUrl !== null){
+    //     reloadPanel(ui, currentUrl);
+    // }else{
+    //     reloadPanel(ui, "%20");
+    // }
 });
 
 
@@ -124,7 +124,7 @@ function setCookie(name,value,seconds) {
         date.setTime(date.getTime() + (seconds*1000));
         expires = "; expires=" + date.toUTCString();
     }
-    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/site";
 }
 function getCookie(name) {
     var nameEQ = name + "=";
